@@ -1,0 +1,114 @@
+body {
+    min-height: auto !important;
+}
+
+.alert {
+    padding: .50rem 1.25rem !important;
+}
+
+.info-icon {
+    float: right;
+    margin-left: 5px;
+    font-size: 18px;
+}
+
+.was-validated .form-select:invalid+.select2 .select2-selection {
+    border-color: #fa5c7c !important;
+}
+
+.was-validated .form-select:valid+.select2 .select2-selection {
+    border-color: #0acf97 !important;
+}
+
+*:focus {
+    outline: 0px;
+}
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    /*height: 80px;*/
+}
+
+.lds-ellipsis div {
+    position: absolute;
+    /*top: 33px;*/
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #727cf5;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.my-chat {
+    left: 156mm !important;
+}
+
+.fa-bell{
+    font-size: 31px;
+    margin-top: 11px;
+    margin-right: 9px;
+}
