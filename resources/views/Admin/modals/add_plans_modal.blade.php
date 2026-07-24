@@ -1,11 +1,12 @@
-<div class="modal-dialog modal-md">
+@php($isEdit = !empty($plan))
+<div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header modal-colored-header bg-primary">
-            <h4 class="modal-title" id="primary-header-modalLabel">Add New Plans</h4>
-            <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="primary-header-modalLabel">{{ $isEdit ? 'Edit Plan' : 'Add New Plan' }}</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal" aria-hidden="true"></button>
         </div>
         <form class="form-horizontal" id="ajax-form" method="POST"
-              action="{{route('save.plan')}}"
+              action="{{ $isEdit ? route('update.plan', ['id' => $plan->id]) : route('save.plan') }}"
               data-table="plans-table" enctype="multipart/form-data" data-file="true">
             <div class="modal-body">
                 @csrf
@@ -16,6 +17,9 @@
                                     <label class="col-3 col-form-label">Choose Plans Images</label>
                                     <div class="col-9">
                                         <input type="file" class="form-control" name="image[]" id="image" multiple>
+                                        @if($isEdit && $images->count())
+                                            <span class="admin-current-file">Current: {{ $images->implode(', ') }}</span>
+                                        @endif
                                         @error('Choose Image')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
@@ -24,7 +28,7 @@
                                 <div class="row mb-3">
                                     <label class="col-3 col-form-label">Enter Plan Type</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="" placeholder="Enter Type" autocomplete="Enter type">
+                                        <input type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type', $plan->type ?? '') }}" placeholder="Enter Type" autocomplete="Enter type">
                                         @error('Enter type')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
@@ -33,7 +37,7 @@
                                 <div class="row mb-3">
                                     <label class="col-3 col-form-label">Enter Plans Title</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="" placeholder="Enter Title" autocomplete="Enter title">
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $plan->title ?? '') }}" placeholder="Enter Title" autocomplete="Enter title">
                                         @error('Enter title')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
@@ -42,7 +46,7 @@
                                 <div class="row mb-3">
                                     <label class="col-3 col-form-label">Enter Address</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="" placeholder="Enter address" autocomplete="Enter address">
+                                        <input type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ old('location', $plan->location ?? '') }}" placeholder="Enter address" autocomplete="Enter address">
                                         @error('Enter location')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
@@ -58,7 +62,7 @@
                             @endif
                         </div>
                         <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary float-end" data-loading-text="Adding...">Add</button>
+                            <button type="submit" class="btn btn-primary float-end" data-loading-text="Saving...">{{ $isEdit ? 'Update' : 'Add' }}</button>
                         </div>
                     </div>
                     <div id="message-area"></div>

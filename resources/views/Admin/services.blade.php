@@ -13,10 +13,10 @@
     <div class="col-md-12">
         <div class="card border-success border">
             <div class="card-body">
-                <div class="row col-md-12 mb-4">
+                <div class="row col-md-12 mb-4 admin-section-header">
                     <div class="col"> <h5 class="card-title text-success">Our Service</h5></div>
                     <div class="col text-end">
-                        <a href="javascript:void(0)" class="load-modal" title="Edit"
+                        <a href="javascript:void(0)" class="load-modal" title="Add"
                             data-url="{{route('service.modal')}}">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                             <span><i class="fa fa-plus"> Add New Service</i></span> 
@@ -25,7 +25,8 @@
          
                 </div>
                
-                <table id="service-table" class="table table-md-12" data-url="{{ route('service.list') }}">
+                <div class="table-responsive admin-table-responsive">
+                <table id="service-table" class="table table-bordered nowrap w-100" data-url="{{ route('service.list') }}">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -33,13 +34,14 @@
                             <th>Icon</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th></th>
+                            <th>Action</th>
                            
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>

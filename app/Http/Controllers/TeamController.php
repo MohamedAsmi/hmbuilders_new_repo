@@ -66,10 +66,16 @@ class TeamController extends BaseController
 
         return DataTables::of($rows)
         ->addColumn('actions', function ($model) {
-            return '<a href="javascript:void(0)" class="delete" title="Delete"
+            return '<div class="table-actions">
+            <a href="javascript:void(0)" class="load-modal" title="Edit"
+            data-url="' . route('team.modal', ['id' => $model->id]) . '">
+                <i class="fas fa-edit text-primary"></i>
+            </a>
+            <a href="javascript:void(0)" class="delete" title="Delete"
             data-url="' . route('delete.team', ['id' => $model->id]) . '">
                 <i class=" dripicons-trash text-danger"></i>
-            </a>';
+            </a>
+            </div>';
                     
         })
         ->rawColumns(['actions'])
@@ -77,9 +83,10 @@ class TeamController extends BaseController
             ->make(true);
     }
     
-    public function team()
+    public function team($id = null)
     {
-        return View('Admin.modals.add_team_modal');
+        $member = $id ? team::findOrFail($id) : null;
+        return View('Admin.modals.add_team_modal')->with(['member' => $member]);
     }
     /**
      * Store a newly created resource in storage.
@@ -90,6 +97,7 @@ class TeamController extends BaseController
     public function store(StoreteamRequest $request)
     {
 
+        $filename = null;
         if($request->file('image')){
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
@@ -145,9 +153,30 @@ class TeamController extends BaseController
      * @param  \App\Models\team  $team
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateteamRequest $request, team $team)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'image' => ['nullable'],
+            'name' => ['required'],
+            'qualification' => ['required'],
+            'position' => ['required'],
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'qualification' => $request->qualification,
+            'position' => $request->position,
+        ];
+
+        if($request->file('image')){
+            $file = $request->file('image');
+            $data['image'] = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('image'), $data['image']);
+        }
+
+        team::updateById($id, $data);
+
+        return self::response('success', 'Successfully Updated Member!');
     }
 
     /**

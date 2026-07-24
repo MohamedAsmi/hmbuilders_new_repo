@@ -9,6 +9,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Plan;
 use App\Models\PlanImage;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\Request;
 
 use App\Models\project_image;
 class ProjectController extends BaseController
@@ -60,14 +61,23 @@ class ProjectController extends BaseController
 
 
         return DataTables::of($projectsarr)
+            ->editColumn('image', function ($model) {
+                return $this->renderImageList(json_decode($model->image, true) ?: [], 'image');
+            })
             ->addColumn('actions', function ($model) {
-                return '<a href="javascript:void(0)" class="delete" title="Delete"
+                return '<div class="table-actions">
+                <a href="javascript:void(0)" class="load-modal" title="Edit"
+                data-url="' . route('projects.modal', ['id' => $model->id]) . '">
+                    <i class="fas fa-edit text-primary"></i>
+                </a>
+                <a href="javascript:void(0)" class="delete" title="Delete"
                 data-url="' . route('delete.projects', ['id' => $model->id]) . '">
                     <i class=" dripicons-trash text-danger"></i>
-                </a>';
+                </a>
+                </div>';
                         
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['image','actions'])
             ->addIndexColumn()
             ->make(true);
     }
@@ -91,27 +101,48 @@ class ProjectController extends BaseController
 
 
         return DataTables::of($projectsarr)
+            ->editColumn('image', function ($model) {
+                return $this->renderImageList(json_decode($model->image, true) ?: [], 'image');
+            })
             ->addColumn('actions', function ($model) {
-                return '<a href="javascript:void(0)" class="delete" title="Delete"
+                return '<div class="table-actions">
+                <a href="javascript:void(0)" class="load-modal" title="Edit"
+                data-url="' . route('plan.modal', ['id' => $model->id]) . '">
+                    <i class="fas fa-edit text-primary"></i>
+                </a>
+                <a href="javascript:void(0)" class="delete" title="Delete"
                 data-url="' . route('delete.plan', ['id' => $model->id]) . '">
                     <i class=" dripicons-trash text-danger"></i>
-                </a>';
+                </a>
+                </div>';
                         
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['image','actions'])
             ->addIndexColumn()
             ->make(true);
     }
 
     
-    public function projects(){
+    public function projects($id = null){
 
-        return View('Admin.modals.add_projects_modal');
+        $project = $id ? project::findOrFail($id) : null;
+        $images = $id ? project_image::where('project_id', $id)->pluck('image') : collect();
+
+        return View('Admin.modals.add_projects_modal')->with([
+            'project' => $project,
+            'images' => $images,
+        ]);
     }
 
-    public function plansModal(){
+    public function plansModal($id = null){
 
-        return View('Admin.modals.add_plans_modal');
+        $plan = $id ? Plan::findOrFail($id) : null;
+        $images = $id ? PlanImage::where('project_id', $id)->pluck('image') : collect();
+
+        return View('Admin.modals.add_plans_modal')->with([
+            'plan' => $plan,
+            'images' => $images,
+        ]);
     }
     /**
      * Store a newly created resource in storage.
@@ -128,20 +159,9 @@ class ProjectController extends BaseController
             'title' => $request->title,
             'location' => $request->location,
         ]);
-        $i=0;
 
-        if($files=$request->file('image')){
-            foreach($files as $key=>$file){
-                
-                $name= date('Y-m-dH:i:s').'Project_image'.$key;
-                $file->move('image',$name);
-
-                project_image::insertRow([
-                    'project_id' => $id->id,
-                    'image' => $name,
-                ]);
-                $i++;
-            }
+        if($files = $request->file('image')){
+            $this->saveImages($files, $id->id, project_image::class, 'Project_image');
         }
 
         return self::response('success', 'Successfully Added New Project!');
@@ -160,25 +180,9 @@ class ProjectController extends BaseController
             'title' => $request->title,
             'location' => $request->location,
         ]);
-        $i=0;
 
         if($files=$request->file('image')){
-            foreach($files as $key=>$file){
-                
-                $destinationPath = public_path('image'); // Define the directory path
-                if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0777, true); // Create the directory with write permissions
-                }
-
-                $name = date('Y-m-d_H-i-s') . '_Plan_image' . $key; // Generate a unique filename
-                $file->move($destinationPath, $name); 
-
-                PlanImage::insertRow([
-                    'project_id' => $id->id,
-                    'image' => $name,
-                ]);
-                $i++;
-            }
+            $this->saveImages($files, $id->id, PlanImage::class, 'Plan_image');
         }
 
         return self::response('success', 'Successfully Added New Project!');
@@ -228,9 +232,95 @@ class ProjectController extends BaseController
      * @param  \App\Models\project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateprojectRequest $request, project $project)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'image' => ['nullable'],
+            'type' => ['required'],
+            'title' => ['required'],
+            'location' => ['required'],
+        ]);
+
+        project::updateById($id, [
+            'type' => $request->type,
+            'title' => $request->title,
+            'location' => $request->location,
+        ]);
+
+        if($files = $request->file('image')){
+            project_image::deleteSelected(['project_id'=> $id]);
+            $this->saveImages($files, $id, project_image::class, 'Project_image');
+        }
+
+        return self::response('success', 'Successfully Updated Project!');
+    }
+
+    public function updateplan(Request $request, $id)
+    {
+        $request->validate([
+            'image' => ['nullable'],
+            'type' => ['required'],
+            'title' => ['required'],
+            'location' => ['required'],
+        ]);
+
+        Plan::updateById($id, [
+            'type' => $request->type,
+            'title' => $request->title,
+            'location' => $request->location,
+        ]);
+
+        if($files = $request->file('image')){
+            PlanImage::deleteSelected(['project_id'=> $id]);
+            $this->saveImages($files, $id, PlanImage::class, 'Plan_image');
+        }
+
+        return self::response('success', 'Successfully Updated Plan!');
+    }
+
+    private function saveImages($files, $projectId, $imageModel, $prefix)
+    {
+        $destinationPath = public_path('image');
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        foreach($files as $key => $file){
+            $extension = $file->getClientOriginalExtension();
+            $name = date('Y-m-d_H-i-s') . '_' . $projectId . '_' . $prefix . '_' . $key . '_' . uniqid();
+
+            if ($extension) {
+                $name .= '.' . $extension;
+            }
+
+            $file->move($destinationPath, $name);
+
+            $imageModel::insertRow([
+                'project_id' => $projectId,
+                'image' => $name,
+            ]);
+        }
+    }
+
+    private function renderImageList(array $images, $folder)
+    {
+        if (empty($images)) {
+            return '<span class="text-muted">No image</span>';
+        }
+
+        $html = '<div class="admin-image-list">';
+
+        foreach(array_slice($images, 0, 3) as $image){
+            $html .= '<img src="' . asset($folder . '/' . $image) . '" alt="' . e($image) . '" title="' . e($image) . '">';
+        }
+
+        if (count($images) > 3) {
+            $html .= '<span class="admin-image-count">+' . (count($images) - 3) . '</span>';
+        }
+
+        $html .= '</div>';
+
+        return $html;
     }
 
     /**

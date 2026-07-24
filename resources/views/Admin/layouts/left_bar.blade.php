@@ -63,7 +63,13 @@
             <li class="side-nav-item">
                 <a href="{{route('AddPlans')}}" class="side-nav-link">
                     <i class="uil-dashboard"></i>
-                    <span> MODERN PROJECTS </span>
+                    <span> Modern Plans </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{route('ModernProjects')}}" class="side-nav-link">
+                    <i class="uil-dashboard"></i>
+                    <span> Modern Projects </span>
                 </a>
             </li>
            

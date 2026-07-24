@@ -25,7 +25,10 @@ $(document).ready(async function () {
         },
         {
             data: 'actions',
-            name: 'actions'
+            name: 'actions',
+            orderable: false,
+            searchable: false,
+            className: 'admin-action-cell'
         },
        
        

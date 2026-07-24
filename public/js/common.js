@@ -1,6 +1,29 @@
 const baseURL = $('meta[name="base_url"]').attr('content');
 const csrfToken = $('meta[name="csrf_token"]').attr('content');
 
+let enforceFixedSidebar = function () {
+    let body = $('body.admin-fixed-sidebar');
+    if (!body.length) {
+        return;
+    }
+
+    body.removeAttr('data-leftbar-compact-mode');
+
+    if ($(window).width() >= 992) {
+        body.removeClass('sidebar-enable');
+    }
+};
+
+$(document).ready(function () {
+    enforceFixedSidebar();
+});
+
+$(window).on('resize', enforceFixedSidebar);
+
+$(document).on('click', '.admin-fixed-sidebar .button-menu-mobile', function () {
+    setTimeout(enforceFixedSidebar, 0);
+});
+
 $(document).on('submit', '#ajax-form', async function (e) {
     e.preventDefault();
     let url = $(this).attr('action');
@@ -52,9 +75,13 @@ console.log(response);
     }
 });
 
-$("button[data-dismiss=modal]").click(function()
-{
-  $(".load-modal").modal('hide');
+$(document).on('click', 'button[data-dismiss=modal]', function () {
+    let modalEl = $(this).closest('.modal')[0];
+
+    if (modalEl) {
+        let modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        modal.hide();
+    }
 });
 
 $(document).on('submit', 'form', function () {
@@ -102,7 +129,9 @@ function initDataTable(table, columns, formId, aaSorting = [],
             lengthMenu: lengthMenu,
             aaSorting: aaSorting,
             columns: columns,
-            responsive: true,
+            responsive: false,
+            scrollX: true,
+            autoWidth: false,
             language: {
                 searchPlaceholder: 'Search...',
                 sSearch: '',
@@ -240,4 +269,3 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
 })
-

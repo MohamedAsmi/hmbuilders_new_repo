@@ -7,6 +7,7 @@ use App\Http\Requests\StoreinquireRequest;
 use App\Http\Requests\UpdateinquireRequest;
 use App\Http\Controllers\BaseController;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\Request;
 
 class InquireController extends BaseController
 {
@@ -34,15 +35,27 @@ class InquireController extends BaseController
 
         return DataTables::of($projects)
             ->addColumn('actions', function ($model) {
-                return '<a href="javascript:void(0)" class="delete" title="Delete"
+                return '<div class="table-actions">
+                <a href="javascript:void(0)" class="load-modal" title="Edit"
+                data-url="' . route('inquire.modal', ['id' => $model->id]) . '">
+                    <i class="fas fa-edit text-primary"></i>
+                </a>
+                <a href="javascript:void(0)" class="delete" title="Delete"
                 data-url="' . route('delete.inquires', ['id' => $model->id]) . '">
                     <i class=" dripicons-trash text-danger"></i>
-                </a>';
+                </a>
+                </div>';
                         
             })
             ->rawColumns(['actions'])
             ->addIndexColumn()
             ->make(true);
+    }
+
+    public function inquire($id)
+    {
+        $inquire = inquire::findOrFail($id);
+        return View('Admin.modals.edit_inquire_modal')->with(['inquire' => $inquire]);
     }
 
     public function delete($id)
@@ -100,9 +113,25 @@ class InquireController extends BaseController
      * @param  \App\Models\inquire  $inquire
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateinquireRequest $request, inquire $inquire)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'fname' => ['required'],
+            'lname' => ['required'],
+            'mobile' => ['required'],
+            'service' => ['required'],
+            'message' => ['required'],
+        ]);
+
+        inquire::updateById($id, [
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'mobile' => $request->mobile,
+            'service' => $request->service,
+            'message' => $request->message,
+        ]);
+
+        return self::response('success', 'Successfully Updated Inquire!');
     }
 
     /**

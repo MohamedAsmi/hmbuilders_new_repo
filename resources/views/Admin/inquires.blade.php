@@ -13,14 +13,13 @@
     <div class="col-md-12">
         <div class="card border-success border">
             <div class="card-body">
-                <div class="row col-md-12 mb-4">
+                <div class="row col-md-12 mb-4 admin-section-header">
                     <div class="col"> <h5 class="card-title text-success">Inquires</h5></div>
                 
                 </div>
          
-                </div>
-               
-                <table id="inquire-table" class="table table-md-12" data-url="{{ route('iquires.list') }}">
+                <div class="table-responsive admin-table-responsive">
+                <table id="inquire-table" class="table table-bordered nowrap w-100" data-url="{{ route('iquires.list') }}">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -29,13 +28,14 @@
                             <th>Mobile</th>
                             <th>Service</th>
                             <th>Message</th>
-                            <th></th>
+                            <th>Action</th>
                            
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>

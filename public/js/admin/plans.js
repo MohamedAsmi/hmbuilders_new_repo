@@ -21,7 +21,10 @@ $(document).ready(async function () {
         },
         {
             data: 'actions',
-            name: 'actions'
+            name: 'actions',
+            orderable: false,
+            searchable: false,
+            className: 'admin-action-cell'
         },
        
        
@@ -38,4 +41,3 @@ $(document).on('click', '.delete', function () {
     let modal = new bootstrap.Modal(document.getElementById('delete-modal'));
     modal.show();
 });
-

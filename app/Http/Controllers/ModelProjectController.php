@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ModelProject;
 use App\Http\Requests\StoreModelProjectRequest;
 use App\Http\Requests\UpdateModelProjectRequest;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ModelProjectController extends BaseController
@@ -37,10 +37,16 @@ class ModelProjectController extends BaseController
                 return '<img src="' . $url . '" alt="Image" style="height:50px;width:50px;">';
             })
             ->addColumn('actions', function ($model) {
-                return '<a href="javascript:void(0)" class="delete" title="Delete"
+                return '<div class="table-actions">
+                <a href="javascript:void(0)" class="load-modal" title="Edit"
+                data-url="' . route('ModernProjects.modal', ['id' => $model->id]) . '">
+                    <i class="fas fa-edit text-primary"></i>
+                </a>
+                <a href="javascript:void(0)" class="delete" title="Delete"
                 data-url="' . route('delete.ModernProjects', ['id' => $model->id]) . '">
                     <i class=" dripicons-trash text-danger"></i>
-                </a>';
+                </a>
+                </div>';
                         
             })
             ->rawColumns(['image','actions'])
@@ -53,14 +59,18 @@ class ModelProjectController extends BaseController
         ModelProject::deleteById($id);
         return self::response('success', 'Deleted!');
     }
-    public function projects(){
+    public function projects($id = null){
 
-        return View('Admin.modals.add_modern_projects_modal');
+        $project = $id ? ModelProject::findOrFail($id) : null;
+        return View('Admin.modals.add_modern_projects_modal')->with(['project' => $project]);
     }
 
     public function store(StoreModelProjectRequest $request)
     {
-        // Validate the request
+        $request->validate([
+            'name' => ['required'],
+            'image' => ['required'],
+        ]);
       
         // Handle the image upload
         if ($file = $request->file('image')) {
@@ -76,12 +86,10 @@ class ModelProjectController extends BaseController
                 'image_path' => $name,
             ]);
     
-            // Return a success response
-            return response()->json(['status' => 'success', 'message' => 'Successfully Added New Project!']);
+            return self::response('success', 'Successfully Added New Project!');
         }
     
-        // Return an error response if the file is not provided
-        return response()->json(['status' => 'error', 'message' => 'Image upload failed!'], 400);
+        return self::response('error', 'Image upload failed!', [], 400);
     }
     /**
      * Show the form for creating a new resource.
@@ -130,9 +138,26 @@ class ModelProjectController extends BaseController
      * @param  \App\Models\ModelProject  $modelProject
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateModelProjectRequest $request, ModelProject $modelProject)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'image' => ['nullable'],
+        ]);
+
+        $data = [
+            'name' => $request->name,
+        ];
+
+        if ($file = $request->file('image')) {
+            $name = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/modelprojects/'), $name);
+            $data['image_path'] = $name;
+        }
+
+        ModelProject::updateById($id, $data);
+
+        return self::response('success', 'Successfully Updated Project!');
     }
 
     /**

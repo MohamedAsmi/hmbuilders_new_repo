@@ -4,8 +4,8 @@
 @include('Admin.layouts.head')
 @stack('css')
 
-<body class="loading"
-      data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":true, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": false}'>
+<body class="loading admin-fixed-sidebar"
+      data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": false}'>
 <!-- Begin page -->
 <div class="wrapper">
 
@@ -48,10 +48,10 @@
     </div>
 </div>
 
-<div id="modal" class="modal fade col-md-8" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 <div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header modal-colored-header bg-danger">
                 <h4 class="modal-title" id="primary-header-modalLabel">Delete</h4>
