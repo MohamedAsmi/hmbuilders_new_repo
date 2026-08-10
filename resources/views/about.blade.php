@@ -32,15 +32,18 @@
 </section>
 
 <section class="section bg-stone">
-    <div class="container">
-        <div class="section-head" data-reveal="fade">
-            <div class="eyebrow">Our Story</div>
-            <h2>From One Machine To A Registered Construction Company</h2>
-        </div>
-        <div data-reveal="fade" style="max-width:900px;">
+    <div class="container story-layout">
+        <div class="story-copy" data-reveal="fade">
+            <div class="section-head">
+                <div class="eyebrow">Our Story</div>
+                <h2>From One Machine To A Registered Construction Company</h2>
+            </div>
             <p>The Founder and Chief Managing Director of our company is <strong>Mr. H.M.M Aathif</strong>, a qualified automobile technician who laid the foundation for our company in 2007 by starting a small-scale cement block manufacturing business with a single machine. He registered the business under the name HM Building Material Supplies in 2010.</p>
-            <p style="margin-top:16px;">He then began supplying building materials and undertook small-scale contracts, especially to build houses for friends working abroad. In 2016 he established HM Builders &amp; Material Supplies (Pvt) Ltd as a registered construction company under the Construction Industry Development Authority (CIDA) Sri Lanka. Our company is one of the main subsidiaries of HM Group.</p>
-            <p style="margin-top:16px;">Confidence and continuous effort are the secrets behind our growth from a cement block manufacturer to a registered construction company. HM Builders has stood strong through every challenge in Puttalam city, providing jobs, empowering subcontractors and training the next generation of the construction workforce.</p>
+            <p>He then began supplying building materials and undertook small-scale contracts, especially to build houses for friends working abroad. In 2016 he established HM Builders &amp; Material Supplies (Pvt) Ltd as a registered construction company under the Construction Industry Development Authority (CIDA) Sri Lanka. Our company is one of the main subsidiaries of HM Group.</p>
+            <p>Confidence and continuous effort are the secrets behind our growth from a cement block manufacturer to a registered construction company. HM Builders has stood strong through every challenge in Puttalam city, providing jobs, empowering subcontractors and training the next generation of the construction workforce.</p>
+        </div>
+        <div class="story-portrait" data-reveal="right">
+            <img src="{{ asset('assets/img/aathif.png') }}" alt="Mr. H.M.M Aathif, Founder and Chief Managing Director" loading="lazy">
         </div>
     </div>
 </section>

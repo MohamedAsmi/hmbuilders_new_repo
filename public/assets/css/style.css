@@ -224,6 +224,16 @@ nav.main .container{display:flex;align-items:center;justify-content:space-betwee
 .values .v b{display:block;font-size:15px;color:var(--ink);}
 .values .v span{font-size:13px;color:var(--muted);}
 
+.story-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:76px;align-items:start;}
+.story-layout .section-head{margin-bottom:42px;}
+.story-copy{max-width:760px;}
+.story-copy p + p{margin-top:16px;}
+.story-portrait{align-self:start;margin-top:22px;}
+.story-portrait img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;
+  border-radius:var(--radius);box-shadow:0 24px 52px -28px rgba(20,18,18,.32);
+}
+
 blockquote.mission{
   background:var(--stone);border-left:4px solid var(--primary);border-radius:0 var(--radius) var(--radius) 0;
   padding:34px 40px;font-size:19px;color:var(--ink);font-weight:600;line-height:1.6;margin:0;
@@ -461,15 +471,17 @@ footer{background:#1c1a1a;color:#b9b6b5;padding-top:90px;}
 h1,h2,h3,h4,p,a,span,div{overflow-wrap:break-word;word-wrap:break-word;}
 .welcome,.contact-wrap,.detail-body,.svc-detail,.cta-banner .container,
 .services-grid,.team-grid,.cards-grid,.feature-strip .container,
-.stats .container,.footer-grid,.form-row,.mission-grid{min-width:0;}
-.welcome > *,.contact-wrap > *,.detail-body > *,.svc-detail > *,.mission-grid > *{min-width:0;}
+.stats .container,.footer-grid,.form-row,.mission-grid,.story-layout{min-width:0;}
+.welcome > *,.contact-wrap > *,.detail-body > *,.svc-detail > *,.mission-grid > *,.story-layout > *{min-width:0;}
 
 @media(max-width:1180px){
   .container{max-width:100%;}
 }
 
 @media(max-width:1080px){
-  .welcome,.contact-wrap,.detail-body,.mission-grid{grid-template-columns:1fr;}
+  .welcome,.contact-wrap,.detail-body,.mission-grid,.story-layout{grid-template-columns:1fr;}
+  .story-copy{max-width:900px;}
+  .story-portrait{max-width:420px;margin-top:0;}
   .team-grid,.cards-grid{grid-template-columns:repeat(2,1fr);}
   .services-grid{grid-template-columns:repeat(2,1fr);}
   .footer-grid{grid-template-columns:1fr 1fr;}
