@@ -1,165 +1,102 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.site')
 
-<head>
-    <meta charset="utf-8">
+@section('title', 'Projects - HM Builders & Suppliers (PVT) LTD')
+@section('meta_description', 'Browse completed and ongoing construction projects by HM Builders & Suppliers (Pvt) Ltd across Puttalam and Sri Lanka.')
 
-      
-	<meta property="og:title" content="HM BUILDERS & SUPPLIERS (PVT) LTD">
-	<meta property="og:description" content="We Build Your Future">
-	<meta property="og:image" content="{{asset('images/fav.png')}}">
-	<meta property="og:url" content="https://builders.hmgroup.lk/">
-	<title>HM BUILDERS & SUPPLIERS (PVT) LTD</title>
-	<link rel="icon" type="image/png" href="images/fav.png">
+@section('content')
+@php
+    $fallbackCover = asset('images/project-1.jpg');
+    $types = collect($projectarrs)->pluck('type')->filter()->unique()->values();
+@endphp
 
-    @php $page='home';  @endphp
-    @include('header') 
-	
-	<section class="hero-wrap hero-wrap-2" style="background-image:  url('{{ asset('images/bg_2.jpg')}}');" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row no-gutters slider-text align-items-end justify-content-start">
-				<div class="col-md-9 ftco-animate pb-5">
-					<p class="breadcrumbs"><span class="mr-2"><a href="{{route('main')}}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Projects <i class="fa fa-chevron-right"></i></span></p>
-					<h1 class="mb-3 bread">Projects</h1>
-				</div>
-			</div>
-		</div>
-	</section>
+<section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1600&q=80')">
+    <div class="container">
+        <div class="crumb" data-reveal="fade">
+            <a href="{{ route('main') }}">Home</a><span class="sep">/</span><span class="cur">Projects</span>
+        </div>
+        <h1 data-reveal="fade" style="transition-delay:.15s">Projects</h1>
+        <p class="lead" data-reveal="fade" style="transition-delay:.3s">A look at the completed and ongoing construction projects delivered by HM Builders across Sri Lanka.</p>
+    </div>
+</section>
 
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-3">
-				<div class="col-md-7 text-center heading-section ftco-animate">
-					<span class="subheading">Our Global Work Industries</span>
-					<h2 class="mb-4">Latest Projects</h2>
-				</div>
-			</div>
-			<div class="row">
+<section class="section">
+    <div class="container">
+        <div class="section-head center">
+            <div class="eyebrow" style="justify-content:center;">Our Work</div>
+            <h2>Latest Projects</h2>
+        </div>
 
-				@foreach ($projectarrs as $projectarr)
-				<div class="col-md-4">
-					<div class="project">
-						<a href="{{route('project.images', ['id' => $projectarr->id])}}" class="img d-flex align-items-center" style="background-image: url({{ asset("image/$projectarr->image") }});">
-							<div class="icon d-flex align-items-center justify-content-center mb-5"><span class="fa fa-plus"></span></div>
-						</a>
-						<div class="text">
-							<span class="subheading">{{$projectarr->type}}</span>
-							<h3>{{$projectarr->title}}</h3>
-							<p><span class="fa fa-map-marker mr-1"></span> {{$projectarr->location}}</p>
-						</div>
-					</div>
-				</div>
-				@endforeach
+        @if($types->count() > 1)
+            <div class="filter-bar" id="projectFilters">
+                <button type="button" class="active" data-filter="all">All Projects</button>
+                @foreach($types as $type)
+                    <button type="button" data-filter="{{ \Illuminate\Support\Str::slug($type) }}">{{ $type }}</button>
+                @endforeach
+            </div>
+        @endif
 
-				{{-- <div class="col-md-4">
-					<div class="project">
-						<a href="images/project-1.jpg" class="img image-popup d-flex align-items-center" style="background-image: url(images/project-1.jpg);">
-							<div class="icon d-flex align-items-center justify-content-center mb-5"><span class="fa fa-plus"></span></div>
-						</a>
-						<div class="text">
-							<span class="subheading">Building</span>
-							<h3>Building A Condominium</h3>
-							<p><span class="fa fa-map-marker mr-1"></span> San Francisco, California, USA</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="project">
-						<a href="images/project-2.jpg" class="img image-popup d-flex align-items-center" style="background-image: url(images/project-2.jpg);">
-							<div class="icon d-flex align-items-center justify-content-center mb-5"><span class="fa fa-plus"></span></div>
-						</a>
-						<div class="text">
-							<span class="subheading">Building</span>
-							<h3>Building A Condominium</h3>
-							<p><span class="fa fa-map-marker mr-1"></span> San Francisco, California, USA</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="project">
-						<a href="images/project-3.jpg" class="img image-popup d-flex align-items-center" style="background-image: url(images/project-3.jpg);">
-							<div class="icon d-flex align-items-center justify-content-center mb-5"><span class="fa fa-plus"></span></div>
-						</a>
-						<div class="text">
-							<span class="subheading">Building</span>
-							<h3>Building A Condominium</h3>
-							<p><span class="fa fa-map-marker mr-1"></span> San Francisco, California, USA</p>
-						</div>
-					</div>
-				</div>
+        <div class="cards-grid" id="projectsGrid">
+            @forelse($projectarrs as $projectarr)
+                @php
+                    $cover = !empty($projectarr->image) ? asset('image/' . str_replace(':', '_', $projectarr->image)) : $fallbackCover;
+                    $type = $projectarr->type ?: 'Project';
+                    $filter = \Illuminate\Support\Str::slug($type);
+                @endphp
+                <div class="p-card" data-reveal="scale" data-card-filter="{{ $filter }}">
+                    <a href="{{ route('project.images', ['id' => $projectarr->id]) }}" class="thumb">
+                        <img src="{{ $cover }}" alt="{{ $projectarr->title }}" loading="lazy">
+                        <span class="status neutral">{{ $type }}</span>
+                    </a>
+                    <div class="body">
+                        <div class="loc">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            {{ $projectarr->location }}
+                        </div>
+                        <h3><a href="{{ route('project.images', ['id' => $projectarr->id]) }}">{{ $projectarr->title }}</a></h3>
+                        <a href="{{ route('project.images', ['id' => $projectarr->id]) }}" class="view-link">View Project &rarr;</a>
+                    </div>
+                </div>
+            @empty
+                <div class="empty-state">No projects found yet.</div>
+            @endforelse
+        </div>
 
-				<div class="col-md-4">
-					<div class="project">
-						<a href="images/project-4.jpg" class="img image-popup d-flex align-items-center" style="background-image: url(images/project-4.jpg);">
-							<div class="icon d-flex align-items-center justify-content-center mb-5"><span class="fa fa-plus"></span></div>
-						</a>
-						<div class="text">
-							<span class="subheading">Building</span>
-							<h3>Building A Condominium</h3>
-							<p><span class="fa fa-map-marker mr-1"></span> San Francisco, California, USA</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="project">
-						<a href="images/project-5.jpg" class="img image-popup d-flex align-items-center" style="background-image: url(images/project-5.jpg);">
-							<div class="icon d-flex align-items-center justify-content-center mb-5"><span class="fa fa-plus"></span></div>
-						</a>
-						<div class="text">
-							<span class="subheading">Building</span>
-							<h3>Building A Condominium</h3>
-							<p><span class="fa fa-map-marker mr-1"></span> San Francisco, California, USA</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="project">
-						<a href="images/project-6.jpg" class="img image-popup d-flex align-items-center" style="background-image: url(images/project-6.jpg);">
-							<div class="icon d-flex align-items-center justify-content-center mb-5"><span class="fa fa-plus"></span></div>
-						</a>
-						<div class="text">
-							<span class="subheading">Building</span>
-							<h3>Building A Condominium</h3>
-							<p><span class="fa fa-map-marker mr-1"></span> San Francisco, California, USA</p>
-						</div>
-					</div>
-				</div> --}}
-			</div>
-			<div class="row mt-5">
-				<div class="col text-center">
-					<div class="block-27">
-						@if ($paginator->hasPages())
-							<ul>
-								{{-- Previous Page Link --}}
-								@if ($paginator->onFirstPage())
-									<li class="disabled"><span>&laquo;</span></li>
-								@else
-									<li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a></li>
-								@endif
+        @if($paginator->hasPages())
+            <nav class="pagination" aria-label="Projects pagination">
+                @if($paginator->onFirstPage())
+                    <span class="disabled">&laquo;</span>
+                @else
+                    <a href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a>
+                @endif
 
-								{{-- Pagination Elements --}}
-								@for ($i = 1; $i <= $paginator->lastPage(); $i++)
-									@if ($i == $paginator->currentPage())
-										<li class="active"><span>{{ $i }}</span></li>
-									@else
-										<li><a href="{{ $paginator->url($i) }}">{{ $i }}</a></li>
-									@endif
-								@endfor
+                @for($i = 1; $i <= $paginator->lastPage(); $i++)
+                    @if($i == $paginator->currentPage())
+                        <span class="active" aria-current="page">{{ $i }}</span>
+                    @else
+                        <a href="{{ $paginator->url($i) }}">{{ $i }}</a>
+                    @endif
+                @endfor
 
-								{{-- Next Page Link --}}
-								@if ($paginator->hasMorePages())
-									<li><a href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a></li>
-								@else
-									<li class="disabled"><span>&raquo;</span></li>
-								@endif
-							</ul>
-						@endif
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                @if($paginator->hasMorePages())
+                    <a href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a>
+                @else
+                    <span class="disabled">&raquo;</span>
+                @endif
+            </nav>
+        @endif
+    </div>
+</section>
 
-	@include('footer') 
-	</html>
+<div class="cta-banner">
+    <div class="container">
+        <div data-reveal="left">
+            <h2>Have a project in mind? Let's build it together.</h2>
+            <p>24/7 customer support - call us anytime for a free consultation.</p>
+        </div>
+        <div class="cta-phone" data-reveal="right">
+            <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.99.36 1.96.68 2.9a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.18-1.18a2 2 0 0 1 2.11-.45c.94.32 1.91.55 2.9.68A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><span>Free Call</span><b>+94 32 226 5511</b></div>
+        </div>
+    </div>
+</div>
+@endsection

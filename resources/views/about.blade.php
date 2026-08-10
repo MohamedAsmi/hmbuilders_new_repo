@@ -1,180 +1,110 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.site')
 
-<head>
-    <meta charset="utf-8">
+@section('title', 'About Us - HM Builders & Suppliers (PVT) LTD')
+@section('meta_description', 'Learn about HM Builders & Material Supplies (Pvt) Ltd, founded in 2007, CIDA registered, and led by a construction team based in Puttalam, Sri Lanka.')
 
-	<meta property="og:title" content="HM BUILDERS & SUPPLIERS (PVT) LTD">
-	<meta property="og:description" content="We Build Your Future">
-	<meta property="og:image" content="{{asset('images/fav.png')}}">
-	<meta property="og:url" content="https://builders.hmgroup.lk/">
-	<title>HM BUILDERS & SUPPLIERS (PVT) LTD</title>
-	<link rel="icon" type="image/png" href="images/fav.png">
+@section('content')
+<section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&w=1600&q=80')">
+    <div class="container">
+        <div class="crumb" data-reveal="fade">
+            <a href="{{ route('main') }}">Home</a><span class="sep">/</span><span class="cur">About Us</span>
+        </div>
+        <h1 data-reveal="fade" style="transition-delay:.15s">About Us</h1>
+        <p class="lead" data-reveal="fade" style="transition-delay:.3s">A CIDA-registered construction company based in Puttalam, building homes and futures since 2007.</p>
+    </div>
+</section>
 
-	@php $page='home';  @endphp
-    @include('header') 
+<section class="section">
+    <div class="container welcome">
+        <div class="welcome-media" data-reveal="left">
+            <div class="frame"></div>
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80" alt="HM Builders team on site">
+            <div class="badge"><b>2007</b><span>Founded</span></div>
+        </div>
+        <div data-reveal="right">
+            <div class="eyebrow">Who We Are</div>
+            <h2 style="font-size:clamp(28px,4vw,38px);">HM Builders &amp; Material Supplies (Pvt) Ltd</h2>
+            <p style="margin-top:18px;">We all work tirelessly with a dream of building our own houses from our own earnings and living happily with our families, but most of us are not able to achieve this dream. Our prime objective is to build your dream house for you with your own earnings.</p>
+            <p>HM Builders (Pvt) Ltd is an experienced construction company in Puttalam city. We have extended our services all around the island. We make your place strong and long-standing with qualified and experienced technicians along with high-quality building materials.</p>
+            <p>Our prime values are high quality service, affordability and trustworthiness. We have hundreds of workers with long years of experience in building houses, commercial buildings and factories, and we have completed many government and private building construction projects around the country.</p>
+        </div>
+    </div>
+</section>
 
-	<section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('images/bg_2.jpg')}}');" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row no-gutters slider-text align-items-end justify-content-start">
-				<div class="col-md-9 ftco-animate pb-5">
-					<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home <i class="fa fa-chevron-right"></i></a></span> <span>About Us <i class="fa fa-chevron-right"></i></span></p>
-					<h1 class="mb-3 bread">About Us</h1>
-				</div>
-			</div>
-		</div>
-	</section>
+<section class="section bg-stone">
+    <div class="container">
+        <div class="section-head" data-reveal="fade">
+            <div class="eyebrow">Our Story</div>
+            <h2>From One Machine To A Registered Construction Company</h2>
+        </div>
+        <div data-reveal="fade" style="max-width:900px;">
+            <p>The Founder and Chief Managing Director of our company is <strong>Mr. H.M.M Aathif</strong>, a qualified automobile technician who laid the foundation for our company in 2007 by starting a small-scale cement block manufacturing business with a single machine. He registered the business under the name HM Building Material Supplies in 2010.</p>
+            <p style="margin-top:16px;">He then began supplying building materials and undertook small-scale contracts, especially to build houses for friends working abroad. In 2016 he established HM Builders &amp; Material Supplies (Pvt) Ltd as a registered construction company under the Construction Industry Development Authority (CIDA) Sri Lanka. Our company is one of the main subsidiaries of HM Group.</p>
+            <p style="margin-top:16px;">Confidence and continuous effort are the secrets behind our growth from a cement block manufacturer to a registered construction company. HM Builders has stood strong through every challenge in Puttalam city, providing jobs, empowering subcontractors and training the next generation of the construction workforce.</p>
+        </div>
+    </div>
+</section>
 
-	<section class="ftco-section" id="about-section">
-		<div class="container">
-			<div class="row">
+<section class="section">
+    <div class="container" style="max-width:900px;">
+        <div class="eyebrow" data-reveal="fade">Our Mission</div>
+        <blockquote class="mission" data-reveal="fade">"To give clients the most compelling solutions in the construction industry through qualified and expert professionals and supplying quality and affordable building materials."</blockquote>
+    </div>
+</section>
 
-				<div class="col-md-12 py-5 pl-md-5">
-					<div class="row justify-content-center mb-4 pt-md-4">
-						<div class="col-md-12 heading-section ftco-animate">
-							<h2 class="mb-4">HM Builders & Material Supplies (Pvt) Ltd</h2>
+<section class="stats">
+    <div class="container">
+        <div class="stat" data-reveal="fade"><b><span class="count" data-target="450">0</span>+</b><p>Projects Completed</p></div>
+        <div class="stat" data-reveal="fade"><b><span class="count" data-target="900">0</span>+</b><p>Happy Customers</p></div>
+        <div class="stat" data-reveal="fade"><b><span class="count" data-target="17">0</span></b><p>Years Of Experience</p></div>
+        <div class="stat" data-reveal="fade"><b><span class="count" data-target="120">0</span>+</b><p>Skilled Workers</p></div>
+    </div>
+</section>
 
-								<p>We all work tirelessly with a dream of building our own houses from our own earnings and living happily with our families, but most of us are not able to achieve this dream. Our prime objective is to build your dream house for you with your own earnings.</p>
+<section class="section bg-stone" id="team">
+    <div class="container">
+        <div class="section-head center">
+            <div class="eyebrow" style="justify-content:center;">Our Team</div>
+            <h2>Meet The People Behind HM Builders</h2>
+        </div>
+        <div class="team-grid stagger" data-reveal="scale">
+            @forelse($teams as $team)
+                @php
+                    $words = preg_split('/\s+/', trim($team->name));
+                    $initials = collect($words)->filter()->take(2)->map(fn($word) => strtoupper(substr($word, 0, 1)))->implode('');
+                @endphp
+                <div class="team-card">
+                    <div class="team-photo">
+                        @if(!empty($team->image))
+                            <img src="{{ asset('image/' . str_replace(':', '_', $team->image)) }}" alt="{{ $team->name }}" loading="lazy">
+                        @else
+                            <div class="in">{{ $initials ?: 'HM' }}</div>
+                        @endif
+                    </div>
+                    <div class="team-info">
+                        <h4>{{ $team->name }}</h4>
+                        <div class="role">{{ $team->position }}</div>
+                        <div class="deg">{{ $team->qualification }}</div>
+                    </div>
+                </div>
+            @empty
+                <div class="team-card"><div class="team-photo"><div class="in">HA</div></div><div class="team-info"><h4>H.M. Mohamed Aathif</h4><div class="role">Director</div><div class="deg">HND in Automobile</div></div></div>
+                <div class="team-card"><div class="team-photo"><div class="in">NA</div></div><div class="team-info"><h4>N.M. Amhar Husain</h4><div class="role">Managing Director</div><div class="deg">HND in Civil and QS</div></div></div>
+            @endforelse
+        </div>
+    </div>
+</section>
 
-								<p>HM Builders (Pvt) Ltd is an experienced construction company in Puttalam city. We have extended our services all around the island. We make your place strong & long standing with qualified & experienced technicians along with high quality building materials.  Our prime values are; high quality service, affordability & trustworthiness. We have hundreds of workers who have long years of experience in building either your house or commercial buildings or factories. We have completed many government & private building construction projects all around the country.</p>
-
-								<p>The Founder & Chief managing director of our company is Mr. H.M.M Aathif who is a qualified automobile technician, laid the foundation for our company in 2007 by starting a small scale business of cement block manufacturing with a single machine. He got business registration for his business initiation under the name of HM Building Material Supplies in 2010. Later he started supplying building materials and then undertook small scale contracts specially to build houses for his friends who worked abroad. Ultimately in 2016 he established HM Builders & Material Supplies (Pvt) Ltd as a registered construction company under Construction Industry Development Authority (CIDA) Sri Lanka. Our company is the one of main subsidiary of HM Group. Confidence & continuous effort are the secrets behind the growth of our company from a cement block manufacturing to a registered construction company.</p>
-
-								<p>Though several new companies appear day by day and disappear within a short period, we as a company stand strong throughout the period of challenges in Puttalam city. We provide hundreds of employments. We also support & empower other small scale businesses & subcontractors. We recruit trainees in the building construction field and provide them good industrial training by actively involving them in our projects. When it comes to payments, we are flexible and always concerned to complete your construction need as soon as possible. We believe that community development starts with individual development. </p>
-
-								<p>“அன்றாடம் அயராது உழைக்கும் எம் அணைவருக்கும் இருக்கும் ஒரு வாழ்நாள் கனவு தான் குடும்பத்தோடு சந்தோசமாக வாழ எனது சொந்த உழைப்பில் “ஒரு வீடு”. அந்த வாழ்நாள் கணவை பலர் கண்டாலும் அதை நனவாக்கும் சந்தர்ப்பம் சிலருக்கே கிடைக்கின்றது. கடைசி வரை கணவாகவே இருக்கும் உங்களின் கணவு இல்லத்தை நனவாக்குவதே எமது நிறுவனத்தின் இலக்கு”</p>
-
-								<p>HM Builders & Material Supplies (Pvt) Ltd ஆனது புத்தளம் நகரை மையமாக கொண்டு இயங்கிவரும் அனுபவம் மிக்க ஒரு கட்டுமாண நிறுவனமாகும். எமது சேவை புத்தளம் நகரிட்குள் மாத்திரம் மட்டுபடுத்தப்படாது இலங்கையின் ஏனைய பாகங்களிலும் வியாபித்துள்ளது குறிப்பிடத்தக்கது. அனுபவமிக்க தொழில் நுட்பவியலாளர்கள் . மற்றும் உயர்தரமான பொருட்களை கொண்டு தற்கால சவால்களுக்கு முகங்கொடுக்ககூடிய உறுதியான கட்டிடங்களை சிக்கனமான முறையில் நிர்மாணிப்பதே எமது ஒரே நோக்கமாகும். நம்பகத்தன்மை, உயர்தரமான சேவை, குறைந்த செலவு என்பவற்றை தாரக மந்திரமாக கொண்டே எமது நிறுவனம் அன்றிலிந்து இன்றுவரை இயங்குகின்றது. உங்களது கணவு இல்லமோ, வியாபார நிலையமோ, உற்பத்தி தொழிற்சாலையோ எல்லா விதமான கட்டிட நிர்மானத்திலும் எமது நிறுவணம் பல வருட அனுபவம் வாய்ந்தது. பல நூறுபேர் தொழில் புரியும் எமது நிறுவனம் இலங்கை பூராகவும் பல அரசாங்க மற்றும் தனியார் நிறுவனங்களின் கட்டிட நிர்மாண வேலைகளை நேர்த்தியான முறையில் செய்துமுடித்த ஒரு நம்பகமான நிறுவனமாகும்.</p>
-
-								<p>2007ஆம் ஆண்டில் எமது நிறுவனத்தின் ஸ்தாபகரும் பிரதான முகாமைத்துவ பணிப்பாளருமான H.M.M Aathif அவர்களின் ஒரு சிறிய தொழில் முயற்சியாக ஆரம்பிக்கப்பட்ட சீமெந்து கல் உற்பத்தியில் துவக்கம்பெற்று 2010 இல் ஒரு வியாபார நிறுவனமாக HM Building Material Supplies என்ற பெயரில் பதிவு செய்யப்பட்டது. பின் கட்டிட நிர்மாண பொருட்கள் விநியோகம் செய்தல் மற்றும் சிறிய அளவிலான கட்டிட  நிர்மாண பணிகள் குறிப்பாக வெளிநாட்டில் உழைக்கும் நபர்களுக்கு இலங்கையில் வீடுகட்டுவதற்கான அணைத்துவகையான ஏற்பாடுகளையும் செய்துகொடுத்தல் என பல மட்டங்களைதாண்டி பின்னர் 2016ஆம் ஆண்டு இலங்கை சட்டத்தின் கீழ் பதிவு செய்யப்பட்ட்டு HM Builders & Material Supplies (Pvt) Ltd என்ற பெயரில் ஒரு கட்டிட நிர்மான நிறுவனமாக இன்று வரை இயங்குகின்றது. HM Group கூட்டு நிறுவனத்தின் முன்னணி துணை நிறுவனமாக எமது HM Builders நிறுவனம் திகழ்கின்றது. ஒரு சிறிய தொழில் முயற்சி இன்று ஒரு நிறுவனமாக உயர்ந்து நிற்பதற்கு நம்பிக்கை மற்றும் அயராத உழைப்பே காரணமாகும்.</p>
-
-								<p>காலத்துக்கு காலம் பல நிறுவனங்கள் உருவாகி மறைந்துபொகும் இக்காலகட்டத்தில் ஒரு அடிமட்ட சிறுதொழிலாக இருந்து இன்று ஒரு உறுதியான நிறுவனமாக புத்தளம் நகரில் திகழும் எமது நிறுவனம் பல நூறுபேருக்கான வேலைவாய்ப்புகளை வழங்குவது மட்டுமல்லாது ஏனைய தொழில் முயட்சியாளர்களுக்கு வளர்ச்சியடைய சந்தர்ப்பங்களை ஏற்படுத்தி கொடுக்கும் ஒரு வழிகாட்டியாகவும் திகழ்கின்றது. மேலும் கட்டிட நிர்மாண துறையில் கல்விகற்கும் மாணவர்களுக்கான பயிற்சியையும் எமது நிறுவனம் வழங்கிவருவது குறிப்பிடத்தக்கது.</p>
-
-								<p>வெறுமனே இலாப நோக்கில் மட்டுமல்லாது பொது விடயங்களுக்கும் சரி தேவையுடைய தனி நபர்களுக்கும் சரி சலுகைகளை வழங்கி அவர்களின் கட்டுமான தேவைகளை பூர்த்தி செய்வதில் எமது நிறுவனம் கவனம் செலுத்துகிறது.சமூகத்தின் அபிவிருத்திஎன்பது தனி மனித அபிவிருத்தியிலேயேதங்கியுள்ளது என்பதை எமது நிறுவனம் உறுதியாக நம்புகின்றது.</p>
-
-								<h2 class="mb-4">Mission</h2>
-
-								<h3 class="mb-4">To give clients the most compelling solutions in the construction industry through qualified and expert professionals and supplying quality and affordable building materials</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-		<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-3">
-				<div class="col-md-7 text-center heading-section ftco-animate">
-					<span class="subheading">Our Team</span>
-					<h2 class="mb-4">Our Team</h2>
-				</div>
-			</div>
-			<div class="row">
-
-				@foreach ($teams as $team)
-				<div class="col-lg-3 col-sm-6">
-					<div class="block-2 ftco-animate">
-						<div class="flipper">
-							<div class="front" img src="images/team-1.jpg" style="background-image: url('{{asset("image/$team->image")}}');">
-								<div class="box">
-									<h2>{{$team->name}}</h2>
-									<p>({{$team->qualification}})</p>
-									<h2>{{$team->position}}</h2>
-								</div>
-							</div>
-							<div class="back" style="background-image: url('{{ asset("image/$team->image") }}');background-size: cover;background-repeat: no-repeat;background-position: center center;">
-								<!-- back content -->
-								<div class="author d-flex">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-					
-				@endforeach
-				
-				{{-- <div class="col-lg-3 col-sm-6">
-					<div class="block-2 ftco-animate">
-						<div class="flipper">
-							<div class="front" img src="images/team-1.jpg">
-								<div class="box">
-									<h2>H.M.Mohamed Aathif</h2>
-									<p>(HND in Automobile)</p>
-									<h2>Director</h2>
-								</div>
-							</div>
-							<div class="back">
-								<!-- back content -->
-								<div class="author d-flex">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-3 col-sm-6">
-					<div class="block-2 ftco-animate">
-						<div class="flipper">
-							<div class="front" img src="images/team-1.jpg">
-								<div class="box">
-									<h2>H.M.Amhar Husain</h2>
-									<p>(HND in Civil and QS)</p>
-									<h2>Managing Director</h2>
-								</div>
-							</div>
-							<div class="back">
-								<!-- back content -->
-								<div class="author d-flex">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-3 col-sm-6">
-					<div class="block-2 ftco-animate">
-						<div class="flipper">
-							<div class="front" img src="images/team-1.jpg">
-								<div class="box">
-									<h2>M.W.S.L.Shakeeb</h2>
-									<p>(Cert. In CSS)</p>
-									<h2>Assistant Account</h2>
-								</div>
-							</div>
-							<div class="back">
-								<!-- back content -->
-								<div class="author d-flex">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-3 col-sm-6">
-					<div class="block-2 ftco-animate">
-						<div class="flipper">
-							<div class="front" img src="images/team-1.jpg">
-								<div class="box">
-									<h2>I.H.A.Hasan Latheef</h2>
-									<p>(Cert. In CSS)</p>
-									<h2>Civil Supervisor</h2>
-								</div>
-							</div>
-							<div class="back">
-								<!-- back content -->
-								<div class="author d-flex">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> --}}
-
-				
-			</div>
-		</div>
-	</section>
-
-	@include('footer') 
-	</html>
+<div class="cta-banner">
+    <div class="container">
+        <div data-reveal="left">
+            <h2>Have a project in mind? Let's build it together.</h2>
+            <p>24/7 customer support - call us anytime for a free consultation.</p>
+        </div>
+        <div class="cta-phone" data-reveal="right">
+            <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.99.36 1.96.68 2.9a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.18-1.18a2 2 0 0 1 2.11-.45c.94.32 1.91.55 2.9.68A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><span>Free Call</span><b>+94 32 226 5511</b></div>
+        </div>
+    </div>
+</div>
+@endsection
