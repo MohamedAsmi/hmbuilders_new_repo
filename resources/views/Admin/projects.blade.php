@@ -34,6 +34,8 @@
                             <th>Type</th>
                             <th>Title</th>
                             <th>Location</th>
+                            <th>Category</th>
+                            <th>Year</th>
                             <th>Action</th>
                            
                         </tr>

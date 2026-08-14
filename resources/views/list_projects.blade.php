@@ -9,6 +9,43 @@
     $title = $projectdetails->title ?? 'Project Details';
     $type = $projectdetails->type ?? 'Project';
     $location = $projectdetails->location ?? 'Sri Lanka';
+    $projectId = $projectdetails->id ?? null;
+    $titleLower = \Illuminate\Support\Str::lower($title);
+    $typeLower = \Illuminate\Support\Str::lower($type);
+    $status = \Illuminate\Support\Str::contains($typeLower, 'ongoing')
+        ? 'Ongoing'
+        : (\Illuminate\Support\Str::contains($typeLower, 'completed') ? 'Completed' : \Illuminate\Support\Str::title($type));
+    $knownCategories = [
+        43 => 'Commercial',
+        42 => 'Commercial',
+        35 => 'Residential',
+        34 => 'Industrial',
+        33 => 'Residential',
+        32 => 'Community',
+        31 => 'Community',
+        30 => 'Industrial',
+        29 => 'Community',
+    ];
+    $knownYears = [
+        43 => '2024',
+        42 => '2024',
+        35 => '2023',
+        34 => '2023',
+        33 => '2023',
+        32 => '2025',
+        31 => '2025',
+        30 => '2025',
+        29 => '2022',
+    ];
+    $fallbackCategory = ($knownCategories[$projectId] ?? null)
+        ?? (\Illuminate\Support\Str::contains($titleLower, ['masjid', 'community', 'preschool', 'school', 'well']) ? 'Community' : null)
+        ?? (\Illuminate\Support\Str::contains($titleLower, ['water plant', 'administration', 'workshop', 'factory', 'salt', 'poultry']) ? 'Industrial' : null)
+        ?? (\Illuminate\Support\Str::contains($titleLower, ['house', 'storied', 'storey']) ? 'Residential' : 'Commercial');
+    $category = filled($projectdetails->category ?? null) ? $projectdetails->category : $fallbackCategory;
+    $fallbackYear = ($knownYears[$projectId] ?? null) ?? optional($projectdetails->created_at)->format('Y');
+    $year = filled($projectdetails->year ?? null) ? $projectdetails->year : $fallbackYear;
+    $fallbackDescription = 'HM Builders manages each project with experienced technicians, reliable materials and careful site coordination. This gallery shows the project work and progress images saved through the existing backend.';
+    $description = filled($projectdetails->description ?? null) ? $projectdetails->description : $fallbackDescription;
     $cover = ($projectimage && !empty($projectimage->image))
         ? asset('image/' . str_replace(':', '_', $projectimage->image))
         : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
@@ -35,7 +72,7 @@
                     <span class="m"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>{{ $type }}</span>
                 </div>
             </div>
-            <span class="status neutral">{{ $type }}</span>
+            {{-- <span class="status neutral">{{ $type }}</span> --}}
         </div>
 
         <div class="detail-hero-img" data-reveal="scale">
@@ -45,7 +82,7 @@
         <div class="detail-body">
             <div class="content" data-reveal="left">
                 <h3>Project Overview</h3>
-                <p>HM Builders manages each project with experienced technicians, reliable materials and careful site coordination. This gallery shows the project work and progress images saved through the existing backend.</p>
+                <p>{!! nl2br(e($description)) !!}</p>
 
                 <h3>Gallery</h3>
                 <div class="gallery">
@@ -62,11 +99,13 @@
             <div data-reveal="right">
                 <div class="spec-card">
                     <h4>Project Details</h4>
-                    <div class="spec-row"><span>Category</span><span>{{ $type }}</span></div>
+                    <div class="spec-row"><span>Status</span><span>{{ $status }}</span></div>
                     <div class="spec-row"><span>Location</span><span>{{ $location }}</span></div>
-                    <div class="spec-row"><span>Gallery</span><span>{{ $projectarrs->count() }} Images</span></div>
+                    <div class="spec-row"><span>Category</span><span>{{ $category }}</span></div>
+                    @if($year)
+                        <div class="spec-row"><span>Year</span><span>{{ $year }}</span></div>
+                    @endif
                     <a href="#quote" class="btn btn-primary" onclick="openDrawer(event)">Request A Similar Quote</a>
-                    <a href="{{ route('projects') }}" class="btn btn-dark" style="margin-top:12px;">Back To Projects</a>
                 </div>
             </div>
         </div>

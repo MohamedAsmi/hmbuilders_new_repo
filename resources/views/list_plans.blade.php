@@ -35,14 +35,14 @@
                     <span class="m"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>{{ $location }}</span>
                 </div>
             </div>
-            <span class="status neutral">{{ $type }}</span>
+            {{-- <span class="status neutral">{{ $type }}</span> --}}
         </div>
 
-        <div class="detail-hero-img" data-reveal="scale">
+        {{-- <div class="detail-hero-img" data-reveal="scale">
             <img src="{{ $cover }}" alt="{{ $title }}">
-        </div>
+        </div> --}}
 
-        <div class="detail-body">
+        <div class="detail-body detail-body-full">
             <div class="content" data-reveal="left">
                 <h3>Plan Overview</h3>
                 <p>This architectural plan is managed through the existing HM Builders backend. The images below are loaded from the plan image records already stored in the system.</p>
@@ -59,7 +59,7 @@
                     @endforelse
                 </div>
             </div>
-            <div data-reveal="right">
+            {{-- <div data-reveal="right">
                 <div class="spec-card">
                     <h4>Plan Details</h4>
                     <div class="spec-row"><span>Type</span><span>{{ $type }}</span></div>
@@ -68,7 +68,7 @@
                     <a href="#quote" class="btn btn-primary" onclick="openDrawer(event)">Request This Plan</a>
                     <a href="{{ route('modern-projects') }}" class="btn btn-dark" style="margin-top:12px;">Back To Plans</a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>

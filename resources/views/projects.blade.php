@@ -46,6 +46,7 @@
                     <a href="{{ route('project.images', ['id' => $projectarr->id]) }}" class="thumb">
                         <img src="{{ $cover }}" alt="{{ $projectarr->title }}" loading="lazy">
                         <span class="status neutral">{{ $type }}</span>
+                        <span class="thumb-title">{{ $projectarr->title }}</span>
                     </a>
                     <div class="body">
                         <div class="loc">

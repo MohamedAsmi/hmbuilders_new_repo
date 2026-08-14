@@ -13,5 +13,8 @@ class project extends BaseModel
         'type',
         'title',
         'location',
+        'category',
+        'year',
+        'description',
     ];
 }

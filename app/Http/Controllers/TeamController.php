@@ -65,6 +65,17 @@ class TeamController extends BaseController
         $rows = team::all();
 
         return DataTables::of($rows)
+        ->editColumn('image', function ($model) {
+            if (empty($model->image)) {
+                return '<span class="admin-table-placeholder">No image</span>';
+            }
+
+            $filename = str_replace(':', '_', $model->image);
+            $src = e(asset('image/' . $filename));
+            $alt = e($model->name ?: 'Member image');
+
+            return '<img src="' . $src . '" alt="' . $alt . '" class="admin-table-thumb">';
+        })
         ->addColumn('actions', function ($model) {
             return '<div class="table-actions">
             <a href="javascript:void(0)" class="load-modal" title="Edit"
@@ -78,7 +89,7 @@ class TeamController extends BaseController
             </div>';
                     
         })
-        ->rawColumns(['actions'])
+        ->rawColumns(['image', 'actions'])
             ->addIndexColumn()
             ->make(true);
     }

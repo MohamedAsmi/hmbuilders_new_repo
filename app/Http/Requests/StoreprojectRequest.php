@@ -28,6 +28,9 @@ class StoreprojectRequest extends FormRequest
             'type'=>['required'],
             'title'=>['required'],
             'location'=>['required'],
+            'category'=>['nullable', 'string', 'max:255'],
+            'year'=>['nullable', 'digits:4'],
+            'description'=>['nullable', 'string'],
         ];
     }
 }

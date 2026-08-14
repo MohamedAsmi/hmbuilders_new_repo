@@ -37,6 +37,26 @@ class ServiceController extends BaseController
         $rows = service::all();
 
         return DataTables::of($rows)
+            ->editColumn('image', function ($model) {
+                if (empty($model->image)) {
+                    return '<span class="admin-table-placeholder">No image</span>';
+                }
+
+                $filename = str_replace(':', '_', $model->image);
+                $src = e(asset('image/' . $filename));
+                $alt = e($model->title ?: 'Service image');
+
+                return '<img src="' . $src . '" alt="' . $alt . '" class="admin-table-thumb">';
+            })
+            ->editColumn('icon', function ($model) {
+                $icon = trim((string) $model->icon);
+
+                if ($icon === '') {
+                    return '<span class="admin-table-placeholder">No icon</span>';
+                }
+
+                return '<span class="admin-service-icon" title="' . e($icon) . '"><i class="' . e($icon) . '"></i></span>';
+            })
             ->addColumn('actions', function ($model) {
                 return '<div class="table-actions">
                 <a href="javascript:void(0)" class="load-modal" title="Edit"
@@ -50,7 +70,7 @@ class ServiceController extends BaseController
                 </div>';
                         
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['image', 'icon', 'actions'])
             ->addIndexColumn()
             ->make(true);
     }

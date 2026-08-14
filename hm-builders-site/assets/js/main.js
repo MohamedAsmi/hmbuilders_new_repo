@@ -53,6 +53,52 @@ document.addEventListener('DOMContentLoaded', () => {
     restartAutoplay();
   }
 
+  /* ---------- Home services scroller ---------- */
+  document.querySelectorAll('[data-services-carousel]').forEach(carousel => {
+    const viewport = carousel.querySelector('.services-scroll');
+    const cards = [...carousel.querySelectorAll('.svc-card')];
+    const controls = carousel.parentElement ? carousel.parentElement.querySelector('[data-services-controls]') : null;
+    const prevBtn = controls ? controls.querySelector('[data-services-prev]') : null;
+    const nextBtn = controls ? controls.querySelector('[data-services-next]') : null;
+    if (!viewport || cards.length < 2) return;
+
+    let current = 0;
+    let timer;
+
+    const visibleCount = () => {
+      if (window.matchMedia('(max-width: 640px)').matches) return 1;
+      if (window.matchMedia('(max-width: 1080px)').matches) return 2;
+      return 3;
+    };
+    const maxIndex = () => Math.max(cards.length - visibleCount(), 0);
+    const scrollCurrent = (behavior = 'smooth') => {
+      current = Math.min(current, maxIndex());
+      viewport.scrollTo({ left: cards[current].offsetLeft, behavior });
+    };
+    const go = direction => {
+      const max = maxIndex();
+      if (!max) return;
+      current = direction > 0 ? (current >= max ? 0 : current + 1) : (current <= 0 ? max : current - 1);
+      scrollCurrent();
+    };
+    const stop = () => clearInterval(timer);
+    const start = () => {
+      stop();
+      if (maxIndex()) timer = setInterval(() => go(1), 4200);
+    };
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { go(-1); start(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { go(1); start(); });
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    if (controls) {
+      controls.addEventListener('mouseenter', stop);
+      controls.addEventListener('mouseleave', start);
+    }
+    window.addEventListener('resize', () => { scrollCurrent('auto'); start(); });
+    start();
+  });
+
   /* ---------- Entrance / scroll reveal ---------- */
   const revealEls = document.querySelectorAll('[data-reveal]');
   const io = new IntersectionObserver((entries) => {

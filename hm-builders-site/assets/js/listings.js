@@ -21,6 +21,7 @@ function renderProjectsGrid(filter = 'all') {
       <a href="project-view.html?id=${p.id}" class="thumb">
         <img src="${p.cover}" alt="${p.title}" loading="lazy">
         ${statusBadge(p.status)}
+        <span class="thumb-title">${p.title}</span>
       </a>
       <div class="body">
         <div class="loc">
@@ -130,6 +131,7 @@ function renderRelatedProjects(excludeId) {
       <a href="project-view.html?id=${p.id}" class="thumb">
         <img src="${p.cover}" alt="${p.title}" loading="lazy">
         ${statusBadge(p.status)}
+        <span class="thumb-title">${p.title}</span>
       </a>
       <div class="body">
         <div class="loc">${p.location}</div>

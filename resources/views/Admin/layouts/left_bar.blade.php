@@ -66,13 +66,13 @@
                     <span> Modern Plans </span>
                 </a>
             </li>
-            <li class="side-nav-item">
+            {{-- <li class="side-nav-item">
                 <a href="{{route('ModernProjects')}}" class="side-nav-link">
                     <i class="uil-dashboard"></i>
                     <span> Modern Projects </span>
                 </a>
-            </li>
-           
+            </li> --}}
+
 
         </ul>
         <div class="clearfix"></div>

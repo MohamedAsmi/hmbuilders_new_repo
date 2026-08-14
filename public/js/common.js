@@ -109,8 +109,8 @@ $(document).on('shown.bs.modal', '.modal', function () {
 
 
 function initDataTable(table, columns, formId, aaSorting = [],
-    columnDefs = [], pageLength = 5,
-    lengthMenu = [[5, 50, 100, 500, 1000, -1], [5, 50, 100, 500, 1000, 'All']]) {
+    columnDefs = [], pageLength = 10,
+    lengthMenu = [[10, 50, 100, 500, 1000, -1], [10, 50, 100, 500, 1000, 'All']]) {
     let url = table.attr('data-url');
 
     return new Promise(function (resolve, reject) {

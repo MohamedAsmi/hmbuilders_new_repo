@@ -19,6 +19,14 @@ $(document).ready(async function () {
             data: 'location',
             name: 'location'
         },
+        {
+            data: 'category',
+            name: 'category'
+        },
+        {
+            data: 'year',
+            name: 'year'
+        },
     
         {
             data: 'actions',

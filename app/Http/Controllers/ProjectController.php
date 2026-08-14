@@ -64,6 +64,12 @@ class ProjectController extends BaseController
             ->editColumn('image', function ($model) {
                 return $this->renderImageList(json_decode($model->image, true) ?: [], 'image');
             })
+            ->editColumn('category', function ($model) {
+                return $model->category ?: '-';
+            })
+            ->editColumn('year', function ($model) {
+                return $model->year ?: '-';
+            })
             ->addColumn('actions', function ($model) {
                 return '<div class="table-actions">
                 <a href="javascript:void(0)" class="load-modal" title="Edit"
@@ -158,6 +164,9 @@ class ProjectController extends BaseController
             'type' => $request->type,
             'title' => $request->title,
             'location' => $request->location,
+            'category' => $request->category,
+            'year' => $request->year,
+            'description' => $request->description,
         ]);
 
         if($files = $request->file('image')){
@@ -239,12 +248,18 @@ class ProjectController extends BaseController
             'type' => ['required'],
             'title' => ['required'],
             'location' => ['required'],
+            'category' => ['nullable', 'string', 'max:255'],
+            'year' => ['nullable', 'digits:4'],
+            'description' => ['nullable', 'string'],
         ]);
 
         project::updateById($id, [
             'type' => $request->type,
             'title' => $request->title,
             'location' => $request->location,
+            'category' => $request->category,
+            'year' => $request->year,
+            'description' => $request->description,
         ]);
 
         if($files = $request->file('image')){

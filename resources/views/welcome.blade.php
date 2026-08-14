@@ -60,7 +60,7 @@
             <div class="eyebrow">Welcome to HM Builders</div>
             <h2 style="font-size:clamp(28px,4vw,40px);">HM Builders &amp; Suppliers (Pvt) Ltd</h2>
             <h3 class="since">We have been in this business since 2007, providing trusted industrial services</h3>
-            <p>We all work tirelessly with a dream of building our own houses from our own earnings and living happily with our families, but most of us are not able to achieve this dream. Our prime objective is to build your dream house for you with your own earnings.</p>
+            {{-- <p>We all work tirelessly with a dream of building our own houses from our own earnings and living happily with our families, but most of us are not able to achieve this dream. Our prime objective is to build your dream house for you with your own earnings.</p> --}}
             <p>HM Builders is an experienced construction company in Puttalam city. We have extended our services across the island, making your place strong and long-standing with qualified technicians and high-quality building materials.</p>
             <div class="values">
                 <div class="v"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>High Quality Service</b><span>Every project, every time</span></div></div>
@@ -88,47 +88,51 @@
             <h2>Best Provider For Industrial Services</h2>
             <p style="margin-top:14px;">We supply a wide range of construction materials and services for residential, commercial and industrial projects, from washed sand and aggregates to full turnkey construction.</p>
         </div>
-        <div class="services-grid stagger" data-reveal="scale">
-            <div class="svc-card">
-                <div class="num">01</div>
-                <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
-                <h3>Building Construction</h3>
-                <p>Houses, commercial buildings, apartments, industrial and modular building construction handled end to end.</p>
-                <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
+        <div class="services-carousel" data-services-carousel>
+            <div class="services-scroll">
+                <div class="services-grid stagger" data-reveal="scale">
+                    <div class="svc-card">
+                        <div class="num">01</div>
+                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+                        <h3>Building Construction</h3>
+                        <p>Houses, commercial buildings, apartments, industrial and modular building construction handled end to end.</p>
+                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
+                    </div>
+                    <div class="svc-card">
+                        <div class="num">02</div>
+                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 22h20L12 2z"/><path d="M9 22V14h6v8"/></svg></div>
+                        <h3>Building Plan Drawing</h3>
+                        <p>Architecture, structural, mechanical and electrical, and landscape drawings prepared by qualified draughtsmen.</p>
+                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
+                    </div>
+                    <div class="svc-card">
+                        <div class="num">03</div>
+                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg></div>
+                        <h3>Construction Material Supply</h3>
+                        <p>Leading supplier of washed sand, aggregates, base varieties, sweet sand, boulders and natural rocks.</p>
+                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
+                    </div>
+                    <div class="svc-card">
+                        <div class="num">04</div>
+                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+                        <h3>Consultation</h3>
+                        <p>Expert guidance at every stage of your project, from planning and budgeting through to completion.</p>
+                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
+                    </div>
+                    <div class="svc-card">
+                        <div class="num">05</div>
+                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg></div>
+                        <h3>Interior Designing</h3>
+                        <p>The art and science of enhancing your interior spaces for a healthier, more comfortable environment.</p>
+                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
+                    </div>
+                </div>
             </div>
-            <div class="svc-card">
-                <div class="num">02</div>
-                <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 22h20L12 2z"/><path d="M9 22V14h6v8"/></svg></div>
-                <h3>Building Plan Drawing</h3>
-                <p>Architecture, structural, mechanical and electrical, and landscape drawings prepared by qualified draughtsmen.</p>
-                <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-            </div>
-            <div class="svc-card">
-                <div class="num">03</div>
-                <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg></div>
-                <h3>Construction Material Supply</h3>
-                <p>Leading supplier of washed sand, aggregates, base varieties, sweet sand, boulders and natural rocks.</p>
-                <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-            </div>
-            <div class="svc-card">
-                <div class="num">04</div>
-                <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
-                <h3>Consultation</h3>
-                <p>Expert guidance at every stage of your project, from planning and budgeting through to completion.</p>
-                <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-            </div>
-            <div class="svc-card">
-                <div class="num">05</div>
-                <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg></div>
-                <h3>Interior Designing</h3>
-                <p>The art and science of enhancing your interior spaces for a healthier, more comfortable environment.</p>
-                <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-            </div>
-            <div class="svc-card" style="background:var(--secondary);border-color:var(--secondary);">
-                <h3 style="color:#fff;">Need a custom solution?</h3>
-                <p style="color:#c9c6c6;">Talk to our team about a service tailored to your project.</p>
-                <a href="#quote" class="btn btn-primary" style="margin-top:18px;" onclick="openDrawer(event)">Get In Touch</a>
-            </div>
+        </div>
+        <div class="services-actions" data-services-controls>
+            <button type="button" class="services-scroll-btn" aria-label="Previous services" data-services-prev><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <a href="{{ route('services') }}" class="btn btn-primary">More Services</a>
+            <button type="button" class="services-scroll-btn" aria-label="Next services" data-services-next><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
     </div>
 </section>
