@@ -129,11 +129,11 @@
                 </div>
             </div>
         </div>
-        <div class="services-actions" data-services-controls>
+        {{-- <div class="services-actions" data-services-controls>
             <button type="button" class="services-scroll-btn" aria-label="Previous services" data-services-prev><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
             <a href="{{ route('services') }}" class="btn btn-primary">More Services</a>
             <button type="button" class="services-scroll-btn" aria-label="Next services" data-services-next><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
+        </div> --}}
     </div>
 </section>
 

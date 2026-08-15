@@ -9,12 +9,14 @@
     $title = $projectdetails->title ?? 'Plan Details';
     $type = $projectdetails->type ?? 'Plan';
     $location = $projectdetails->location ?? 'Plan Collection';
+    $fallbackDescription = 'This architectural plan is managed through the existing HM Builders backend. The images below are loaded from the plan image records already stored in the system.';
+    $description = filled($projectdetails->description ?? null) ? $projectdetails->description : $fallbackDescription;
     $cover = ($projectimage && !empty($projectimage->image))
         ? asset('image/' . str_replace(':', '_', $projectimage->image))
         : 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80';
 @endphp
 
-<section class="page-banner" style="background-image:url('{{ $cover }}')">
+<section class="page-banner project-detail-banner" style="background-image:url('{{ $cover }}')">
     <div class="container">
         <div class="crumb" data-reveal="fade">
             <a href="{{ route('main') }}">Home</a><span class="sep">/</span>
@@ -27,7 +29,7 @@
 
 <section class="section">
     <div class="container">
-        <div class="detail-head" data-reveal="fade">
+        {{-- <div class="detail-head" data-reveal="fade">
             <div>
                 <h1>{{ $title }}</h1>
                 <div class="detail-meta">
@@ -35,8 +37,8 @@
                     <span class="m"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>{{ $location }}</span>
                 </div>
             </div>
-            {{-- <span class="status neutral">{{ $type }}</span> --}}
-        </div>
+            <span class="status neutral">{{ $type }}</span>
+        </div> --}}
 
         {{-- <div class="detail-hero-img" data-reveal="scale">
             <img src="{{ $cover }}" alt="{{ $title }}">
@@ -45,7 +47,7 @@
         <div class="detail-body detail-body-full">
             <div class="content" data-reveal="left">
                 <h3>Plan Overview</h3>
-                <p>This architectural plan is managed through the existing HM Builders backend. The images below are loaded from the plan image records already stored in the system.</p>
+                <p>{!! nl2br(e($description)) !!}</p>
 
                 <h3>Plan Gallery</h3>
                 <div class="gallery">

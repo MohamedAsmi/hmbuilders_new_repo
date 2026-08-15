@@ -2,13 +2,16 @@
 
 @section('title', ($projectdetails->title ?? 'Project Details') . ' - HM Builders & Suppliers (PVT) LTD')
 @section('meta_description', 'Project gallery and details from HM Builders & Suppliers (Pvt) Ltd.')
-@section('meta_image', ($projectimage && !empty($projectimage->image)) ? asset('image/' . str_replace(':', '_', $projectimage->image)) : asset('images/fav.png'))
+@section('meta_image', !empty($coverImage ?? '') ? asset('image/' . str_replace(':', '_', $coverImage)) : asset('images/fav.png'))
 
 @section('content')
 @php
     $title = $projectdetails->title ?? 'Project Details';
     $type = $projectdetails->type ?? 'Project';
     $location = $projectdetails->location ?? 'Sri Lanka';
+    $subtitle = filled($projectdetails->subtitle ?? null)
+        ? $projectdetails->subtitle
+        : 'Project gallery and construction details from HM Builders & Suppliers (Pvt) Ltd.';
     $projectId = $projectdetails->id ?? null;
     $titleLower = \Illuminate\Support\Str::lower($title);
     $typeLower = \Illuminate\Support\Str::lower($type);
@@ -46,25 +49,25 @@
     $year = filled($projectdetails->year ?? null) ? $projectdetails->year : $fallbackYear;
     $fallbackDescription = 'HM Builders manages each project with experienced technicians, reliable materials and careful site coordination. This gallery shows the project work and progress images saved through the existing backend.';
     $description = filled($projectdetails->description ?? null) ? $projectdetails->description : $fallbackDescription;
-    $cover = ($projectimage && !empty($projectimage->image))
-        ? asset('image/' . str_replace(':', '_', $projectimage->image))
+    $cover = !empty($coverImage ?? '')
+        ? asset('image/' . str_replace(':', '_', $coverImage))
         : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
 @endphp
 
-<section class="page-banner" style="background-image:url('{{ $cover }}')">
+<section class="page-banner project-detail-banner" style="background-image:url('{{ $cover }}')">
     <div class="container">
         <div class="crumb" data-reveal="fade">
             <a href="{{ route('main') }}">Home</a><span class="sep">/</span>
             <a href="{{ route('projects') }}">Projects</a><span class="sep">/</span><span class="cur">{{ $title }}</span>
         </div>
         <h1 data-reveal="fade" style="transition-delay:.15s">{{ $title }}</h1>
-        <p class="lead" data-reveal="fade" style="transition-delay:.3s">Project gallery and construction details from HM Builders &amp; Suppliers (Pvt) Ltd.</p>
+        <p class="lead" data-reveal="fade" style="transition-delay:.3s">{{ $subtitle }}</p>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-        <div class="detail-head" data-reveal="fade">
+        {{-- <div class="detail-head" data-reveal="fade">
             <div>
                 <h1>{{ $title }}</h1>
                 <div class="detail-meta">
@@ -72,12 +75,12 @@
                     <span class="m"><svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg>{{ $type }}</span>
                 </div>
             </div>
-            {{-- <span class="status neutral">{{ $type }}</span> --}}
-        </div>
+            <span class="status neutral">{{ $type }}</span>
+        </div> --}}
 
-        <div class="detail-hero-img" data-reveal="scale">
+        {{-- <div class="detail-hero-img" data-reveal="scale">
             <img src="{{ $cover }}" alt="{{ $title }}">
-        </div>
+        </div> --}}
 
         <div class="detail-body">
             <div class="content" data-reveal="left">

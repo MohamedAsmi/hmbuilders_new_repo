@@ -42,7 +42,7 @@ class UserController extends BaseController
 
             $projectsimage =project_image::where('project_id',$project->id)->first();
             $projectarrs[$project->id]=$project;
-            $projectarrs[$project->id]['image'] = $projectsimage ? $projectsimage->image : '';
+            $projectarrs[$project->id]['image'] = $project->cover_image ?: ($projectsimage ? $projectsimage->image : '');
   
 
         }
@@ -54,10 +54,11 @@ class UserController extends BaseController
 
         $projectdetails=project::where('id',$id)->first();
         $projectsimage =project_image::where('project_id',$id)->paginate(100); 
-        $projectimage=project::join('project_images','projects.id','project_images.project_id')->where('projects.id',$id)->first();
+        $projectimage=project_image::where('project_id',$id)->first();
+        $coverImage = $projectdetails->cover_image ?: ($projectimage->image ?? '');
 
         // dd($projectsimage);
-        return view('list_projects')->with(['projectarrs' => $projectsimage,'paginator'=>$projectsimage,'projectdetails'=>$projectdetails,'projectimage'=>$projectimage]);
+        return view('list_projects')->with(['projectarrs' => $projectsimage,'paginator'=>$projectsimage,'projectdetails'=>$projectdetails,'projectimage'=>$projectimage,'coverImage'=>$coverImage]);
     }
 
     public function plans()

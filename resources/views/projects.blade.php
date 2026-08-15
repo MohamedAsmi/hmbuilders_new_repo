@@ -6,7 +6,29 @@
 @section('content')
 @php
     $fallbackCover = asset('images/project-1.jpg');
-    $types = collect($projectarrs)->pluck('type')->filter()->unique()->values();
+    $projectType = function ($type) {
+        $raw = trim((string) $type);
+        $lower = \Illuminate\Support\Str::lower($raw);
+
+        if (\Illuminate\Support\Str::contains($lower, 'completed')) {
+            return ['label' => 'COMPLETED PROJECT', 'filter' => 'completed-project', 'order' => 1];
+        }
+
+        if (\Illuminate\Support\Str::contains($lower, 'ongoing')) {
+            return ['label' => 'ONGOING PROJECT', 'filter' => 'ongoing-project', 'order' => 2];
+        }
+
+        $label = $raw !== '' ? \Illuminate\Support\Str::upper($raw) : 'PROJECT';
+
+        return ['label' => $label, 'filter' => \Illuminate\Support\Str::slug($label), 'order' => 10];
+    };
+    $types = collect($projectarrs)
+        ->map(function ($project) use ($projectType) {
+            return $projectType($project->type ?? 'Project');
+        })
+        ->unique('filter')
+        ->sortBy('order')
+        ->values();
 @endphp
 
 <section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1600&q=80')">
@@ -30,7 +52,7 @@
             <div class="filter-bar" id="projectFilters">
                 <button type="button" class="active" data-filter="all">All Projects</button>
                 @foreach($types as $type)
-                    <button type="button" data-filter="{{ \Illuminate\Support\Str::slug($type) }}">{{ $type }}</button>
+                    <button type="button" data-filter="{{ $type['filter'] }}">{{ $type['label'] }}</button>
                 @endforeach
             </div>
         @endif
@@ -39,14 +61,13 @@
             @forelse($projectarrs as $projectarr)
                 @php
                     $cover = !empty($projectarr->image) ? asset('image/' . str_replace(':', '_', $projectarr->image)) : $fallbackCover;
-                    $type = $projectarr->type ?: 'Project';
-                    $filter = \Illuminate\Support\Str::slug($type);
+                    $type = $projectType($projectarr->type ?: 'Project');
                 @endphp
-                <div class="p-card" data-reveal="scale" data-card-filter="{{ $filter }}">
+                <div class="p-card" data-reveal="scale" data-card-filter="{{ $type['filter'] }}">
                     <a href="{{ route('project.images', ['id' => $projectarr->id]) }}" class="thumb">
                         <img src="{{ $cover }}" alt="{{ $projectarr->title }}" loading="lazy">
-                        <span class="status neutral">{{ $type }}</span>
-                        <span class="thumb-title">{{ $projectarr->title }}</span>
+                        <span class="status neutral">{{ $type['label'] }}</span>
+                        {{-- <span class="thumb-title">{{ $projectarr->title }}</span> --}}
                     </a>
                     <div class="body">
                         <div class="loc">

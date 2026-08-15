@@ -12,7 +12,9 @@ class project extends BaseModel
     protected $fillable = [
         'type',
         'title',
+        'subtitle',
         'location',
+        'cover_image',
         'category',
         'year',
         'description',

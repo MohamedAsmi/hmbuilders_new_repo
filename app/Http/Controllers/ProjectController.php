@@ -54,7 +54,7 @@ class ProjectController extends BaseController
             }
 
             $projectsarr[$project->id]=$project;
-            $projectsarr[$project->id]['image']=json_encode($images);
+            $projectsarr[$project->id]['image']=json_encode(array_values(array_filter(array_merge([$project->cover_image], $images))));
     
         }
 
@@ -163,11 +163,18 @@ class ProjectController extends BaseController
         $id = project::insertRow([
             'type' => $request->type,
             'title' => $request->title,
+            'subtitle' => $request->subtitle,
             'location' => $request->location,
             'category' => $request->category,
             'year' => $request->year,
             'description' => $request->description,
         ]);
+
+        if($cover = $request->file('cover_image')){
+            project::updateById($id->id, [
+                'cover_image' => $this->saveSingleImage($cover, $id->id, 'Project_cover'),
+            ]);
+        }
 
         if($files = $request->file('image')){
             $this->saveImages($files, $id->id, project_image::class, 'Project_image');
@@ -188,6 +195,7 @@ class ProjectController extends BaseController
             'type' => $request->type,
             'title' => $request->title,
             'location' => $request->location,
+            'description' => $request->description,
         ]);
 
         if($files=$request->file('image')){
@@ -244,10 +252,13 @@ class ProjectController extends BaseController
     public function update(Request $request, $id)
     {
         $request->validate([
+            'cover_image' => ['nullable', 'image'],
             'image' => ['nullable'],
+            'image.*' => ['image'],
             'type' => ['required'],
             'title' => ['required'],
             'location' => ['required'],
+            'subtitle' => ['nullable', 'string'],
             'category' => ['nullable', 'string', 'max:255'],
             'year' => ['nullable', 'digits:4'],
             'description' => ['nullable', 'string'],
@@ -256,11 +267,18 @@ class ProjectController extends BaseController
         project::updateById($id, [
             'type' => $request->type,
             'title' => $request->title,
+            'subtitle' => $request->subtitle,
             'location' => $request->location,
             'category' => $request->category,
             'year' => $request->year,
             'description' => $request->description,
         ]);
+
+        if($cover = $request->file('cover_image')){
+            project::updateById($id, [
+                'cover_image' => $this->saveSingleImage($cover, $id, 'Project_cover'),
+            ]);
+        }
 
         if($files = $request->file('image')){
             project_image::deleteSelected(['project_id'=> $id]);
@@ -277,12 +295,14 @@ class ProjectController extends BaseController
             'type' => ['required'],
             'title' => ['required'],
             'location' => ['required'],
+            'description' => ['nullable', 'string'],
         ]);
 
         Plan::updateById($id, [
             'type' => $request->type,
             'title' => $request->title,
             'location' => $request->location,
+            'description' => $request->description,
         ]);
 
         if($files = $request->file('image')){
@@ -291,6 +311,25 @@ class ProjectController extends BaseController
         }
 
         return self::response('success', 'Successfully Updated Plan!');
+    }
+
+    private function saveSingleImage($file, $projectId, $prefix)
+    {
+        $destinationPath = public_path('image');
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        $extension = $file->getClientOriginalExtension();
+        $name = date('Y-m-d_H-i-s') . '_' . $projectId . '_' . $prefix . '_' . uniqid();
+
+        if ($extension) {
+            $name .= '.' . $extension;
+        }
+
+        $file->move($destinationPath, $name);
+
+        return $name;
     }
 
     private function saveImages($files, $projectId, $imageModel, $prefix)
@@ -326,7 +365,8 @@ class ProjectController extends BaseController
         $html = '<div class="admin-image-list">';
 
         foreach(array_slice($images, 0, 3) as $image){
-            $html .= '<img src="' . asset($folder . '/' . $image) . '" alt="' . e($image) . '" title="' . e($image) . '">';
+            $filename = str_replace(':', '_', $image);
+            $html .= '<img src="' . asset($folder . '/' . rawurlencode($filename)) . '" alt="' . e($image) . '" title="' . e($image) . '">';
         }
 
         if (count($images) > 3) {

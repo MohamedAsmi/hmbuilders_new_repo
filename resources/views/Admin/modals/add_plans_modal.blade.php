@@ -1,5 +1,5 @@
 @php($isEdit = !empty($plan))
-<div class="modal-dialog modal-md modal-dialog-centered">
+<div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header modal-colored-header bg-primary">
             <h4 class="modal-title" id="primary-header-modalLabel">{{ $isEdit ? 'Edit Plan' : 'Add New Plan' }}</h4>
@@ -20,7 +20,7 @@
                                         @if($isEdit && $images->count())
                                             <span class="admin-current-file">Current: {{ $images->implode(', ') }}</span>
                                         @endif
-                                        @error('Choose Image')
+                                        @error('image')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
@@ -29,7 +29,7 @@
                                     <label class="col-3 col-form-label">Enter Plan Type</label>
                                     <div class="col-9">
                                         <input type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type', $plan->type ?? '') }}" placeholder="Enter Type" autocomplete="Enter type">
-                                        @error('Enter type')
+                                        @error('type')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
@@ -38,7 +38,7 @@
                                     <label class="col-3 col-form-label">Enter Plans Title</label>
                                     <div class="col-9">
                                         <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $plan->title ?? '') }}" placeholder="Enter Title" autocomplete="Enter title">
-                                        @error('Enter title')
+                                        @error('title')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
@@ -47,7 +47,16 @@
                                     <label class="col-3 col-form-label">Enter Address</label>
                                     <div class="col-9">
                                         <input type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ old('location', $plan->location ?? '') }}" placeholder="Enter address" autocomplete="Enter address">
-                                        @error('Enter location')
+                                        @error('location')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-3 col-form-label">Plan Overview</label>
+                                    <div class="col-9">
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="4" placeholder="Enter plan overview">{{ old('description', $plan->description ?? '') }}</textarea>
+                                        @error('description')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>

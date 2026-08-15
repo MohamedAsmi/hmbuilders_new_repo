@@ -13,5 +13,6 @@ class Plan extends BaseModel
         'type',
         'title',
         'location',
+        'description',
     ];
 }

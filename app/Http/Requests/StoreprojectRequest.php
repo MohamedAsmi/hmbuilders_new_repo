@@ -24,10 +24,13 @@ class StoreprojectRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'=>['required'],
+            'cover_image'=>['nullable', 'image'],
+            'image'=>['nullable'],
+            'image.*'=>['image'],
             'type'=>['required'],
             'title'=>['required'],
             'location'=>['required'],
+            'subtitle'=>['nullable', 'string'],
             'category'=>['nullable', 'string', 'max:255'],
             'year'=>['nullable', 'digits:4'],
             'description'=>['nullable', 'string'],

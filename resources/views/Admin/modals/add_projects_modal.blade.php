@@ -14,11 +14,23 @@
                     <div class="col-md-12">
                         <div class="row mb-3 client_type">
                                 <div class="row mb-3">
-                                    <label class="col-3 col-form-label">Choose Project Images</label>
+                                    <label class="col-3 col-form-label">Cover Photo</label>
                                     <div class="col-9">
-                                        <input type="file" class="form-control" name="image[]" id="image" multiple>
+                                        <input type="file" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" id="cover_image" accept="image/*">
+                                        @if($isEdit && !empty($project->cover_image))
+                                            <span class="admin-current-file">Current cover: {{ $project->cover_image }}</span>
+                                        @endif
+                                        @error('cover_image')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-3 col-form-label">Gallery Images</label>
+                                    <div class="col-9">
+                                        <input type="file" class="form-control" name="image[]" id="image" multiple accept="image/*">
                                         @if($isEdit && $images->count())
-                                            <span class="admin-current-file">Current: {{ $images->implode(', ') }}</span>
+                                            <span class="admin-current-file">Current gallery: {{ $images->implode(', ') }}</span>
                                         @endif
                                         @error('image')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -39,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label class="col-3 col-form-label">Enter Project Title</label>
+                                    <label class="col-3 col-form-label">Project Title</label>
                                     <div class="col-9">
                                         <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $project->title ?? '') }}" placeholder="Enter Title" autocomplete="Enter title">
                                         @error('title')
@@ -48,7 +60,16 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label class="col-3 col-form-label">Enter Address</label>
+                                    <label class="col-3 col-form-label">Subtitle</label>
+                                    <div class="col-9">
+                                        <textarea class="form-control @error('subtitle') is-invalid @enderror" name="subtitle" rows="2" placeholder="Enter page subtitle">{{ old('subtitle', $project->subtitle ?? '') }}</textarea>
+                                        @error('subtitle')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-3 col-form-label">Location</label>
                                     <div class="col-9">
                                         <input type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ old('location', $project->location ?? '') }}" placeholder="Enter address" autocomplete="Enter address">
                                         @error('location')
