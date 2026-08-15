@@ -73,13 +73,32 @@
         <div class="team-grid stagger" data-reveal="scale">
             @forelse($teams as $team)
                 @php
+                    $imageMap = [
+                        '202501010626atff 4to-02.jpg' => 'aathif.jpg',
+                        '202501010840HM Builders staffs-02.jpg' => 'aathif.jpg',
+                        '202501010627atff 4to-01.jpg' => 'amhar-husain.jpg',
+                        '202501010840HM Builders staffs-01.jpg' => 'amhar-husain.jpg',
+                        '202501010629atff 4to-03.jpg' => 'shakeeb.jpg',
+                        '202501010841HM Builders staffs-03.jpg' => 'shakeeb.jpg',
+                        '202501010859HM Builders staffs-04.jpg' => 'musthaq-mohamed.jpg',
+                        '202501010921HM Builders staffs-06.jpg' => 'naazim.jpg',
+                        '202501020842HM Builders staffs-08.jpg' => 'zibry.jpg',
+                        '202510151030HM Builders staffs-09.jpg' => 'nasrifa.jpg',
+                        '202510151032HM Builders staffs-10.jpg' => 'fathima-naseeha.jpg',
+                        '202602210417_MG_8213 copy.jpg.jpeg' => 'asran-card.jpg',
+                    ];
+                    $image = str_replace(':', '_', $team->image ?? '');
+                    $imageSrc = $image ? asset('image/' . $image) : null;
+                    if ($image && isset($imageMap[$image])) {
+                        $imageSrc = asset('assets/img/team/' . $imageMap[$image]);
+                    }
                     $words = preg_split('/\s+/', trim($team->name));
                     $initials = collect($words)->filter()->take(2)->map(fn($word) => strtoupper(substr($word, 0, 1)))->implode('');
                 @endphp
                 <div class="team-card">
                     <div class="team-photo">
-                        @if(!empty($team->image))
-                            <img src="{{ asset('image/' . str_replace(':', '_', $team->image)) }}" alt="{{ $team->name }}" loading="lazy">
+                        @if($imageSrc)
+                            <img src="{{ $imageSrc }}" alt="{{ $team->name }}" loading="lazy">
                         @else
                             <div class="in">{{ $initials ?: 'HM' }}</div>
                         @endif
@@ -91,8 +110,15 @@
                     </div>
                 </div>
             @empty
-                <div class="team-card"><div class="team-photo"><div class="in">HA</div></div><div class="team-info"><h4>H.M. Mohamed Aathif</h4><div class="role">Director</div><div class="deg">HND in Automobile</div></div></div>
-                <div class="team-card"><div class="team-photo"><div class="in">NA</div></div><div class="team-info"><h4>N.M. Amhar Husain</h4><div class="role">Managing Director</div><div class="deg">HND in Civil and QS</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/aathif.jpg') }}" alt="H.M. Mohamed Aathif" loading="lazy"></div><div class="team-info"><h4>H.M. Mohamed Aathif</h4><div class="role">Director</div><div class="deg">HND in Automobile</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/amhar-husain.jpg') }}" alt="N.M. Amhar Husain" loading="lazy"></div><div class="team-info"><h4>N.M. Amhar Husain</h4><div class="role">Managing Director</div><div class="deg">HND in Civil and QS</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/shakeeb.jpg') }}" alt="W.M.S.L. Shakeeb" loading="lazy"></div><div class="team-info"><h4>W.M.S.L. Shakeeb</h4><div class="role">Administrator Officer</div><div class="deg">Cert. in CSS</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/musthaq-mohamed.jpg') }}" alt="M. Musthaq Mohamed" loading="lazy"></div><div class="team-info"><h4>M. Musthaq Mohamed</h4><div class="role">Project Manager</div><div class="deg">NDT</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/naazim.jpg') }}" alt="N.M.M. Naazim" loading="lazy"></div><div class="team-info"><h4>N.M.M. Naazim</h4><div class="role">Draughtsman</div><div class="deg">Dip. in Architectural Design</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/zibry.jpg') }}" alt="R.M. Zibry" loading="lazy"></div><div class="team-info"><h4>R.M. Zibry</h4><div class="role">Multimedia Designer</div><div class="deg">BSc IT(R), HND Multimedia</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/nasrifa.jpg') }}" alt="M.S.F. Nasrifa" loading="lazy"></div><div class="team-info"><h4>M.S.F. Nasrifa</h4><div class="role">Accountant &amp; Manager</div><div class="deg">BBSc(Hons), CA(R)</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/fathima-naseeha.jpg') }}" alt="M.R. Fathima Naseeha" loading="lazy"></div><div class="team-info"><h4>M.R. Fathima Naseeha</h4><div class="role">Incharge - HR &amp; Admin</div><div class="deg">Dip. in ICT, English and HR</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/asran-card.jpg') }}" alt="M.N.M. Asran" loading="lazy"></div><div class="team-info"><h4>M.N.M. Asran</h4><div class="role">Quantity Surveyor</div><div class="deg">HND in Quantity Surveying</div></div></div>
             @endforelse
         </div>
     </div>

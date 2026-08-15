@@ -317,7 +317,7 @@ blockquote.mission{
 .team-card{background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);transition:.4s var(--ease);}
 .team-card:hover{transform:translateY(-8px);box-shadow:0 26px 50px -24px rgba(20,18,18,.24);}
 .team-photo{
-  height:280px;background:linear-gradient(160deg,var(--stone-2),var(--stone));
+  aspect-ratio:1/1;height:auto;background:linear-gradient(160deg,var(--stone-2),var(--stone));
   display:flex;align-items:center;justify-content:center;color:var(--primary);position:relative;overflow:hidden;
 }
 .team-photo img{width:100%;height:100%;object-fit:cover;object-position:center center;}
@@ -602,7 +602,7 @@ h1,h2,h3,h4,p,a,span,div{overflow-wrap:break-word;word-wrap:break-word;}
   .detail-head{align-items:flex-start;}
   .p-card .thumb{height:190px;}
   .p-card .thumb-title{font-size:15px;left:16px;right:16px;bottom:16px;-webkit-line-clamp:2;}
-  .team-photo{height:240px;}
+  .team-photo{height:auto;}
 }
 
 @media(max-width:560px){
