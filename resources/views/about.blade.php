@@ -74,10 +74,12 @@
             @forelse($teams as $team)
                 @php
                     $imageMap = [
-                        '202501010626atff 4to-02.jpg' => 'aathif.jpg',
-                        '202501010840HM Builders staffs-02.jpg' => 'aathif.jpg',
-                        '202501010627atff 4to-01.jpg' => 'amhar-husain.jpg',
-                        '202501010840HM Builders staffs-01.jpg' => 'amhar-husain.jpg',
+                        '202501010626atff 4to-02.jpg' => 'aathif-card.jpg',
+                        '202501010840HM Builders staffs-02.jpg' => 'aathif-card.jpg',
+                        '202608150557aathif.jpg' => 'aathif-card.jpg',
+                        '202501010627atff 4to-01.jpg' => 'amhar-card.jpg',
+                        '202501010840HM Builders staffs-01.jpg' => 'amhar-card.jpg',
+                        '202608150606hm team-02.jpg' => 'amhar-card.jpg',
                         '202501010629atff 4to-03.jpg' => 'shakeeb.jpg',
                         '202501010841HM Builders staffs-03.jpg' => 'shakeeb.jpg',
                         '202501010859HM Builders staffs-04.jpg' => 'musthaq-mohamed.jpg',
@@ -110,8 +112,8 @@
                     </div>
                 </div>
             @empty
-                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/aathif.jpg') }}" alt="H.M. Mohamed Aathif" loading="lazy"></div><div class="team-info"><h4>H.M. Mohamed Aathif</h4><div class="role">Director</div><div class="deg">HND in Automobile</div></div></div>
-                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/amhar-husain.jpg') }}" alt="N.M. Amhar Husain" loading="lazy"></div><div class="team-info"><h4>N.M. Amhar Husain</h4><div class="role">Managing Director</div><div class="deg">HND in Civil and QS</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/aathif-card.jpg') }}" alt="H.M. Mohamed Aathif" loading="lazy"></div><div class="team-info"><h4>H.M. Mohamed Aathif</h4><div class="role">Director</div><div class="deg">HND in Automobile</div></div></div>
+                <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/amhar-card.jpg') }}" alt="N.M. Amhar Husain" loading="lazy"></div><div class="team-info"><h4>N.M. Amhar Husain</h4><div class="role">Managing Director</div><div class="deg">HND in Civil and QS</div></div></div>
                 <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/shakeeb.jpg') }}" alt="W.M.S.L. Shakeeb" loading="lazy"></div><div class="team-info"><h4>W.M.S.L. Shakeeb</h4><div class="role">Administrator Officer</div><div class="deg">Cert. in CSS</div></div></div>
                 <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/musthaq-mohamed.jpg') }}" alt="M. Musthaq Mohamed" loading="lazy"></div><div class="team-info"><h4>M. Musthaq Mohamed</h4><div class="role">Project Manager</div><div class="deg">NDT</div></div></div>
                 <div class="team-card"><div class="team-photo"><img src="{{ asset('assets/img/team/naazim.jpg') }}" alt="N.M.M. Naazim" loading="lazy"></div><div class="team-info"><h4>N.M.M. Naazim</h4><div class="role">Draughtsman</div><div class="deg">Dip. in Architectural Design</div></div></div>

@@ -99,6 +99,63 @@ document.addEventListener('DOMContentLoaded', () => {
     start();
   });
 
+  /* ---------- Home team random slider ---------- */
+  document.querySelectorAll('[data-random-team-carousel]').forEach(carousel => {
+    const cards = [...carousel.querySelectorAll('.team-card')];
+    if (cards.length < 2) return;
+
+    let currentCards = [];
+    let timer;
+
+    const visibleCount = () => {
+      if (window.matchMedia('(max-width: 640px)').matches) return 1;
+      if (window.matchMedia('(max-width: 1080px)').matches) return 2;
+      return 4;
+    };
+    const shuffle = items => {
+      const copy = [...items];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    };
+    const chooseCards = count => {
+      const freshCards = cards.filter(card => !currentCards.includes(card));
+      const source = freshCards.length >= count ? freshCards : cards;
+      return shuffle(source).slice(0, count);
+    };
+    const showRandomCards = () => {
+      const count = Math.min(visibleCount(), cards.length);
+      currentCards = chooseCards(count);
+      cards.forEach(card => {
+        card.classList.remove('is-visible');
+        card.style.removeProperty('--i');
+      });
+      currentCards.forEach((card, i) => {
+        card.style.setProperty('--i', i);
+        carousel.appendChild(card);
+        card.classList.add('is-visible');
+      });
+      cards.filter(card => !currentCards.includes(card)).forEach(card => carousel.appendChild(card));
+      carousel.classList.add('is-randomized');
+    };
+    const stop = () => clearInterval(timer);
+    const start = () => {
+      stop();
+      timer = setInterval(showRandomCards, 5200);
+    };
+
+    showRandomCards();
+    start();
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    window.addEventListener('resize', () => {
+      showRandomCards();
+      start();
+    });
+  });
+
   /* ---------- Entrance / scroll reveal ---------- */
   const revealEls = document.querySelectorAll('[data-reveal]');
   const io = new IntersectionObserver((entries) => {

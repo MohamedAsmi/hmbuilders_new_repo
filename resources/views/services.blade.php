@@ -3,6 +3,12 @@
 @section('title', 'Services - HM Builders & Suppliers (PVT) LTD')
 @section('meta_description', 'Building construction, building plan drawing, construction material supply, consultation and interior designing services from HM Builders in Puttalam, Sri Lanka.')
 
+@push('styles')
+    <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/flaticon.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+@endpush
+
 @section('content')
 @php
     $fallbackImages = [
@@ -12,6 +18,7 @@
         'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80',
         'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
     ];
+    $fallbackServiceIcon = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>';
 @endphp
 
 <section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1581091870621-1e9b6b4a1a3f?auto=format&fit=crop&w=1600&q=80')">
@@ -32,9 +39,18 @@
         </div>
         <div class="services-grid stagger" data-reveal="scale">
             @forelse($services as $service)
+                @php
+                    $serviceIcon = trim((string) $service->icon);
+                @endphp
                 <div class="svc-card">
                     <div class="num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
-                    <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+                    <div class="ic">
+                        @if($serviceIcon !== '')
+                            <i class="{{ $serviceIcon }}" aria-hidden="true"></i>
+                        @else
+                            {!! $fallbackServiceIcon !!}
+                        @endif
+                    </div>
                     <h3>{{ $service->title }}</h3>
                     <p>{{ \Illuminate\Support\Str::limit(strip_tags($service->description), 135) }}</p>
                     <a href="#svc-{{ $service->id }}" class="more">Read More &rarr;</a>
@@ -42,7 +58,7 @@
             @empty
                 <div class="svc-card">
                     <div class="num">01</div>
-                    <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
+                    <div class="ic">{!! $fallbackServiceIcon !!}</div>
                     <h3>Building Construction</h3>
                     <p>Houses, commercial buildings, apartments, industrial and modular buildings.</p>
                     <a href="#quote" onclick="openDrawer(event)" class="more">Request Service &rarr;</a>
@@ -64,11 +80,23 @@
                 $image = !empty($service->image)
                     ? asset('image/' . str_replace(':', '_', $service->image))
                     : $fallbackImages[($loop->iteration - 1) % count($fallbackImages)];
+                $serviceIcon = trim((string) $service->icon);
             @endphp
             <div class="svc-detail {{ $loop->even ? 'reverse' : '' }}" id="svc-{{ $service->id }}">
                 <div data-reveal="{{ $loop->even ? 'right' : 'left' }}">
-                    <div class="num-big">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }} / {{ $service->title }}</div>
-                    <h2>{{ $service->title }}</h2>
+                    <div class="svc-detail-heading">
+                        <span class="svc-detail-icon">
+                            @if($serviceIcon !== '')
+                                <i class="{{ $serviceIcon }}" aria-hidden="true"></i>
+                            @else
+                                {!! $fallbackServiceIcon !!}
+                            @endif
+                        </span>
+                        <div>
+                            <div class="num-big">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }} / {{ $service->title }}</div>
+                            <h2>{{ $service->title }}</h2>
+                        </div>
+                    </div>
                     <p>{!! nl2br(e($service->description)) !!}</p>
                     <ul class="svc-list">
                         <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Professional planning and execution</li>
@@ -81,8 +109,13 @@
         @empty
             <div class="svc-detail" id="svc-1">
                 <div data-reveal="left">
-                    <div class="num-big">01 / Building Construction</div>
-                    <h2>Full-Scope Building Construction</h2>
+                    <div class="svc-detail-heading">
+                        <span class="svc-detail-icon">{!! $fallbackServiceIcon !!}</span>
+                        <div>
+                            <div class="num-big">01 / Building Construction</div>
+                            <h2>Full-Scope Building Construction</h2>
+                        </div>
+                    </div>
                     <p>From single-family homes to large commercial and industrial buildings, our teams manage every stage of construction with certified materials and experienced technicians.</p>
                     <ul class="svc-list">
                         <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Houses</li>
