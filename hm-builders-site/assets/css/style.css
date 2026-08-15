@@ -94,10 +94,10 @@ header.site{
 }
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 0;}
 .logo{
-  display:flex;align-items:center;justify-content:center;gap:10px;width:min(250px,100%);padding:7px 10px;
+  display:flex;align-items:center;justify-content:center;gap:10px;width:auto;padding:0;
   background:transparent;border-radius:4px;font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--ink);
 }
-.logo-img{display:block;width:100%;height:auto;}
+.logo-img{display:block;width:auto;height:44px;max-width:100%;}
 .logo .mark{
   width:44px;height:44px;border-radius:8px;background:var(--primary);
   color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;
@@ -474,10 +474,10 @@ footer{background:#1c1a1a;color:#b9b6b5;padding-top:90px;}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:50px;padding-bottom:60px;}
 .footer-grid h5{color:#fff;font-size:15px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px;}
 .f-about .flogo{
-  display:inline-flex;align-items:center;gap:10px;width:min(290px,100%);padding:9px 11px;margin-bottom:18px;
+  display:inline-flex;align-items:center;gap:10px;width:auto;padding:0;margin-bottom:18px;
   background:transparent;border-radius:4px;font-weight:800;font-size:20px;color:#fff;
 }
-.footer-logo-img{display:block;width:100%;height:auto;}
+.footer-logo-img{display:block;width:auto;height:44px;max-width:100%;}
 .f-about .flogo span{color:var(--primary-light);}
 .f-about p{font-size:14px;}
 .f-social{display:flex;gap:10px;margin-top:22px;}
@@ -637,7 +637,7 @@ h1,h2,h3,h4,p,a,span,div{overflow-wrap:break-word;word-wrap:break-word;}
   .burger{width:42px;height:42px;}
   .burger span{left:7px;right:9px;}
   .logo small{display:none;}
-  .logo{gap:8px;padding:6px 8px;}
+  .logo{gap:8px;padding:0;}
   .mobile-cta{padding:9px 14px;font-size:11.5px;}
   .hero-tag{white-space:normal;width:auto;max-width:100%;}
   .welcome{gap:36px;}
@@ -655,7 +655,7 @@ h1,h2,h3,h4,p,a,span,div{overflow-wrap:break-word;word-wrap:break-word;}
   .burger span:nth-child(1){top:11px;}
   .burger span:nth-child(2){top:20px;}
   .burger span:nth-child(3){top:29px;}
-  .logo{font-size:16px;gap:7px;padding:6px 7px;}
+  .logo{font-size:16px;gap:7px;padding:0;}
   .logo .mark{width:34px;height:34px;font-size:13px;border-radius:7px;}
   .mobile-cta{padding:8px 12px;font-size:11px;}
   .hero-tag{font-size:11.5px;padding:7px 14px;}
