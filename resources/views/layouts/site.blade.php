@@ -51,7 +51,7 @@
     <header class="site">
         <div class="container header-inner">
             <a href="{{ route('main') }}" class="logo">
-                <img src="{{ asset('assets/img/HM BUILDERS WEB LOGO WHITE.png') }}" alt="HM Builders & Suppliers (Pvt) Ltd" class="logo-img">
+                <img src="{{ asset('assets/img/HM BUILDERS WEB LOGO.png') }}" alt="HM Builders & Suppliers (Pvt) Ltd" class="logo-img">
             </a>
             <div class="header-info">
                 <div class="info-item">
@@ -99,7 +99,7 @@
         <div class="container footer-grid">
             <div class="f-about" data-reveal="fade">
                 <div class="flogo">
-                    <img src="{{ asset('assets/img/HM BUILDERS WEB LOGO.png') }}" alt="HM Builders & Suppliers (Pvt) Ltd" class="footer-logo-img">
+                    <img src="{{ asset('assets/img/HM BUILDERS WEB LOGO WHITE.png') }}" alt="HM Builders & Suppliers (Pvt) Ltd" class="footer-logo-img">
                 </div>
                 <p>We have been in this business since 2007, providing reliable construction services and helping families build lasting homes with confidence.</p>
                 <div class="f-social">

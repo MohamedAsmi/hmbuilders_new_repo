@@ -95,7 +95,7 @@ header.site{
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 0;}
 .logo{
   display:flex;align-items:center;justify-content:center;gap:10px;width:min(250px,100%);padding:7px 10px;
-  background:var(--secondary);border-radius:4px;font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--ink);
+  background:transparent;border-radius:4px;font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--ink);
 }
 .logo-img{display:block;width:100%;height:auto;}
 .logo .mark{
@@ -475,7 +475,7 @@ footer{background:#1c1a1a;color:#b9b6b5;padding-top:90px;}
 .footer-grid h5{color:#fff;font-size:15px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px;}
 .f-about .flogo{
   display:inline-flex;align-items:center;gap:10px;width:min(290px,100%);padding:9px 11px;margin-bottom:18px;
-  background:#fff;border-radius:4px;font-weight:800;font-size:20px;color:#fff;
+  background:transparent;border-radius:4px;font-weight:800;font-size:20px;color:#fff;
 }
 .footer-logo-img{display:block;width:100%;height:auto;}
 .f-about .flogo span{color:var(--primary-light);}
