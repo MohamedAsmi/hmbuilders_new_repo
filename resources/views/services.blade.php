@@ -19,6 +19,28 @@
         'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
     ];
     $fallbackServiceIcon = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>';
+    $serviceIconImagePattern = '/\.(svg|png|jpe?g|gif|webp)$/i';
+    $isServiceIconImage = function ($icon) use ($serviceIconImagePattern) {
+        $icon = trim((string) $icon);
+        $path = parse_url($icon, PHP_URL_PATH) ?: $icon;
+
+        return $icon !== '' && preg_match($serviceIconImagePattern, $path);
+    };
+    $isServiceIconClass = function ($icon) {
+        return preg_match('/^(flaticon-|fa[srbld]?\s|fa-|mdi\s|mdi-|uil\s|uil-|dripicons-|ti-|bx\s|bx-|la\s|la-|icon-)/i', trim((string) $icon));
+    };
+    $serviceIconUrl = function ($icon) {
+        $icon = trim((string) $icon);
+
+        if (\Illuminate\Support\Str::startsWith($icon, ['http://', 'https://', '/'])) {
+            return $icon;
+        }
+
+        return asset('image/' . str_replace(':', '_', $icon));
+    };
+    $serviceIconText = function ($icon) {
+        return \Illuminate\Support\Str::upper(\Illuminate\Support\Str::limit(trim((string) $icon), 3, ''));
+    };
 @endphp
 
 <section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1581091870621-1e9b6b4a1a3f?auto=format&fit=crop&w=1600&q=80')">
@@ -41,14 +63,20 @@
             @forelse($services as $service)
                 @php
                     $serviceIcon = trim((string) $service->icon);
+                    $serviceIconIsImage = $isServiceIconImage($serviceIcon);
+                    $serviceIconIsClass = $isServiceIconClass($serviceIcon);
                 @endphp
                 <div class="svc-card">
                     <div class="num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
                     <div class="ic">
-                        @if($serviceIcon !== '')
+                        @if($serviceIcon === '')
+                            {!! $fallbackServiceIcon !!}
+                        @elseif($serviceIconIsImage)
+                            <img src="{{ $serviceIconUrl($serviceIcon) }}" alt="{{ $service->title }} icon" loading="lazy">
+                        @elseif($serviceIconIsClass)
                             <i class="{{ $serviceIcon }}" aria-hidden="true"></i>
                         @else
-                            {!! $fallbackServiceIcon !!}
+                            <span class="svc-icon-text">{{ $serviceIconText($serviceIcon) }}</span>
                         @endif
                     </div>
                     <h3>{{ $service->title }}</h3>
@@ -81,15 +109,21 @@
                     ? asset('image/' . str_replace(':', '_', $service->image))
                     : $fallbackImages[($loop->iteration - 1) % count($fallbackImages)];
                 $serviceIcon = trim((string) $service->icon);
+                $serviceIconIsImage = $isServiceIconImage($serviceIcon);
+                $serviceIconIsClass = $isServiceIconClass($serviceIcon);
             @endphp
             <div class="svc-detail {{ $loop->even ? 'reverse' : '' }}" id="svc-{{ $service->id }}">
                 <div data-reveal="{{ $loop->even ? 'right' : 'left' }}">
                     <div class="svc-detail-heading">
                         <span class="svc-detail-icon">
-                            @if($serviceIcon !== '')
+                            @if($serviceIcon === '')
+                                {!! $fallbackServiceIcon !!}
+                            @elseif($serviceIconIsImage)
+                                <img src="{{ $serviceIconUrl($serviceIcon) }}" alt="{{ $service->title }} icon" loading="lazy">
+                            @elseif($serviceIconIsClass)
                                 <i class="{{ $serviceIcon }}" aria-hidden="true"></i>
                             @else
-                                {!! $fallbackServiceIcon !!}
+                                <span class="svc-icon-text">{{ $serviceIconText($serviceIcon) }}</span>
                             @endif
                         </span>
                         <div>

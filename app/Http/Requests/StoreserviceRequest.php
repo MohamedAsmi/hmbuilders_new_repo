@@ -25,7 +25,8 @@ class StoreserviceRequest extends FormRequest
     {
         return [
             'image'=>['required'],
-            'icon'=>['required'],
+            'icon'=>['nullable', 'required_without:icon_image', 'string', 'max:255'],
+            'icon_image'=>['nullable', 'required_without:icon', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp'],
             'title'=>['required'],
             'description'=>['required'],
         ];

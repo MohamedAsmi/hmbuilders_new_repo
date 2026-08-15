@@ -185,6 +185,25 @@ input[type=number] {
     margin: 0;
 }
 
+.admin-service-icon img {
+    display: block;
+    height: 28px;
+    object-fit: contain;
+    width: 28px;
+}
+
+.admin-service-icon-image {
+    background: #fff;
+}
+
+.admin-service-icon-text {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
 .admin-table-placeholder {
     color: #98a6ad;
     font-size: 12px;

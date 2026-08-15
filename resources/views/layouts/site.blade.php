@@ -51,8 +51,7 @@
     <header class="site">
         <div class="container header-inner">
             <a href="{{ route('main') }}" class="logo">
-                <span class="mark">HM</span>
-                <span class="name">HM <b>Builders</b><small>&amp; Suppliers (Pvt) Ltd</small></span>
+                <img src="{{ asset('assets/img/HM BUILDERS WEB LOGO WHITE.png') }}" alt="HM Builders & Suppliers (Pvt) Ltd" class="logo-img">
             </a>
             <div class="header-info">
                 <div class="info-item">
@@ -99,7 +98,9 @@
     <footer>
         <div class="container footer-grid">
             <div class="f-about" data-reveal="fade">
-                <div class="flogo">HM <span>Builders</span></div>
+                <div class="flogo">
+                    <img src="{{ asset('assets/img/HM BUILDERS WEB LOGO.png') }}" alt="HM Builders & Suppliers (Pvt) Ltd" class="footer-logo-img">
+                </div>
                 <p>We have been in this business since 2007, providing reliable construction services and helping families build lasting homes with confidence.</p>
                 <div class="f-social">
                     <a href="https://www.facebook.com/HMBuilders6/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.16 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.9h-2.34V22c4.78-.78 8.44-4.94 8.44-9.94z"/></svg></a>

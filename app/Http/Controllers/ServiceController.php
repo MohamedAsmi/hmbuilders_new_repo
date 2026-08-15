@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 class ServiceController extends BaseController
 {
+    private const ICON_IMAGE_PATTERN = '/\.(svg|png|jpe?g|gif|webp)$/i';
+
     /**
      * Display a listing of the resource.
      *
@@ -53,6 +55,17 @@ class ServiceController extends BaseController
 
                 if ($icon === '') {
                     return '<span class="admin-table-placeholder">No icon</span>';
+                }
+
+                if ($this->isIconImage($icon)) {
+                    $src = e($this->iconImageUrl($icon));
+                    $alt = e($model->title ?: 'Service icon');
+
+                    return '<span class="admin-service-icon admin-service-icon-image" title="' . e($icon) . '"><img src="' . $src . '" alt="' . $alt . '"></span>';
+                }
+
+                if (!$this->isIconClass($icon)) {
+                    return '<span class="admin-service-icon" title="' . e($icon) . '"><span class="admin-service-icon-text">' . e(Str::upper(Str::limit($icon, 3, ''))) . '</span></span>';
                 }
 
                 return '<span class="admin-service-icon" title="' . e($icon) . '"><i class="' . e($icon) . '"></i></span>';
@@ -108,11 +121,15 @@ class ServiceController extends BaseController
         }
 
 
+        $icon = trim((string) $request->icon);
+        if ($request->file('icon_image')) {
+            $icon = $this->storeIconImage($request->file('icon_image'));
+        }
         
     
         service::insertRow([
             'image' => $filename,
-            'icon' => $request->icon,
+            'icon' => $icon,
             'title' => $request->title,
             'description' => $request->description,
         ]);
@@ -157,18 +174,27 @@ class ServiceController extends BaseController
      */
     public function update(Request $request, $id)
     {
+        $service = service::findOrFail($id);
+
         $request->validate([
             'image' => ['nullable'],
-            'icon' => ['required'],
+            'icon' => [empty($service->icon) ? 'required_without:icon_image' : 'nullable', 'nullable', 'string', 'max:255'],
+            'icon_image' => [empty($service->icon) ? 'required_without:icon' : 'nullable', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp'],
             'title' => ['required'],
             'description' => ['required'],
         ]);
 
         $data = [
-            'icon' => $request->icon,
             'title' => $request->title,
             'description' => $request->description,
         ];
+
+        $icon = trim((string) $request->icon);
+        if ($request->file('icon_image')) {
+            $data['icon'] = $this->storeIconImage($request->file('icon_image'));
+        } elseif ($icon !== '') {
+            $data['icon'] = $icon;
+        }
 
         if($request->file('image')){
             $file = $request->file('image');
@@ -190,5 +216,44 @@ class ServiceController extends BaseController
     public function destroy(service $service)
     {
         //
+    }
+
+    private function storeIconImage($file): string
+    {
+        $directory = 'service-icons';
+        $destination = public_path('image/' . $directory);
+
+        if (!is_dir($destination)) {
+            mkdir($destination, 0755, true);
+        }
+
+        $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = strtolower($file->getClientOriginalExtension());
+        $filename = date('YmdHi') . '-' . Str::slug($name) . '-' . Str::random(6) . '.' . $extension;
+
+        $file->move($destination, $filename);
+
+        return $directory . '/' . $filename;
+    }
+
+    private function isIconImage(string $icon): bool
+    {
+        $path = parse_url($icon, PHP_URL_PATH) ?: $icon;
+
+        return (bool) preg_match(self::ICON_IMAGE_PATTERN, $path);
+    }
+
+    private function isIconClass(string $icon): bool
+    {
+        return (bool) preg_match('/^(flaticon-|fa[srbld]?\s|fa-|mdi\s|mdi-|uil\s|uil-|dripicons-|ti-|bx\s|bx-|la\s|la-|icon-)/i', $icon);
+    }
+
+    private function iconImageUrl(string $icon): string
+    {
+        if (Str::startsWith($icon, ['http://', 'https://', '/'])) {
+            return $icon;
+        }
+
+        return asset('image/' . str_replace(':', '_', $icon));
     }
 }

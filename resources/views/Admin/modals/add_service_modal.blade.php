@@ -1,4 +1,10 @@
-@php($isEdit = !empty($service))
+@php
+    $isEdit = !empty($service);
+    $currentIcon = trim((string) ($service->icon ?? ''));
+    $currentIconPath = parse_url($currentIcon, PHP_URL_PATH) ?: $currentIcon;
+    $currentIconIsImage = $currentIcon !== '' && preg_match('/\.(svg|png|jpe?g|gif|webp)$/i', $currentIconPath);
+    $iconTextValue = old('icon', $currentIconIsImage ? '' : $currentIcon);
+@endphp
 <div class="modal-dialog modal-md modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header modal-colored-header bg-primary">
@@ -27,10 +33,23 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label class="col-3 col-form-label">Enter Icon</label>
+                                    <label class="col-3 col-form-label">Icon Image</label>
                                     <div class="col-9">
-                                        <input type="text" class="form-control @error('icon') is-invalid @enderror" name="icon" value="{{ old('icon', $service->icon ?? '') }}" placeholder="Enter Icon" autocomplete="Enter Icon">
-                                        @error('Enter icon')
+                                        <input type="file" class="form-control @error('icon_image') is-invalid @enderror" name="icon_image" id="icon_image" accept="image/*">
+                                        @if($isEdit && $currentIconIsImage)
+                                            <span class="admin-current-file">Current icon image: {{ $currentIcon }}</span>
+                                        @endif
+                                        @error('icon_image')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-3 col-form-label">Icon Text/Class</label>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control @error('icon') is-invalid @enderror" name="icon" value="{{ $iconTextValue }}" placeholder="flaticon-architect or BC" autocomplete="off">
+                                        <small class="text-muted">Upload an icon image, or enter an icon class/text. Image upload replaces this value.</small>
+                                        @error('icon')
                                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                         @enderror
                                     </div>
