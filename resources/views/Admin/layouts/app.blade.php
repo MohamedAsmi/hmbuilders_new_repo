@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <script>document.write(new Date().getFullYear())</script>
-                        © Copyright All Rights Reserved <a href="https://addonlk.net/">| Developed by Addon IT</a>
+                        © Copyright All Rights Reserved <a href="https://infynixit.dev/">| Infynix IT</a>
                     </div>
                     <div class="col-md-6">
                         <div class="text-md-end footer-links d-none d-md-block">
