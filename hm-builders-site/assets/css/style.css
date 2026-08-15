@@ -92,7 +92,7 @@ header.site{
   position:sticky;top:0;z-index:500;background:#fff;
   box-shadow:0 1px 0 var(--line);
 }
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 0;}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 24px;}
 .logo{
   display:flex;align-items:center;justify-content:center;gap:10px;width:auto;padding:0;
   background:transparent;border-radius:4px;font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--ink);
@@ -572,8 +572,9 @@ h1,h2,h3,h4,p,a,span,div{overflow-wrap:break-word;word-wrap:break-word;}
   .burger span:nth-child(2){top:21px;}
   .burger span:nth-child(3){top:30px;}
   .mobile-cta{display:inline-flex;order:1;}
-  .header-inner{display:grid;grid-template-columns:44px minmax(0,1fr) auto;column-gap:20px;justify-content:normal;}
+  .header-inner{display:grid;grid-template-columns:44px minmax(0,1fr) auto;column-gap:22px;justify-content:normal;}
   .logo{justify-self:center;min-width:0;}
+  .logo-img{height:40px;}
   .mobile-cta{justify-self:end;}
   nav.main{display:none;}
   .feature-strip{margin-top:-48px;}
@@ -633,12 +634,13 @@ h1,h2,h3,h4,p,a,span,div{overflow-wrap:break-word;word-wrap:break-word;}
 }
 
 @media(max-width:560px){
-  .header-inner{grid-template-columns:42px minmax(0,1fr) auto;column-gap:14px;}
+  .header-inner{grid-template-columns:42px minmax(0,1fr) auto;column-gap:16px;}
   .burger{width:42px;height:42px;}
   .burger span{left:7px;right:9px;}
   .logo small{display:none;}
+  .logo-img{height:34px;}
   .logo{gap:8px;padding:0;}
-  .mobile-cta{padding:9px 14px;font-size:11.5px;}
+  .mobile-cta{padding:9px 12px;font-size:11px;}
   .hero-tag{white-space:normal;width:auto;max-width:100%;}
   .welcome{gap:36px;}
   .svc-detail{gap:32px;padding:50px 0;}
@@ -649,15 +651,16 @@ h1,h2,h3,h4,p,a,span,div{overflow-wrap:break-word;word-wrap:break-word;}
   .topbar .container{height:auto;padding-top:8px;padding-bottom:8px;flex-wrap:wrap;gap:8px;row-gap:6px;}
   .topbar-left a{font-size:12px;}
   .topbar .social{display:none;}
-  .header-inner{padding:13px 0;grid-template-columns:40px minmax(0,1fr) auto;column-gap:12px;}
+  .header-inner{padding:13px 18px;grid-template-columns:40px minmax(0,1fr) auto;column-gap:14px;}
   .burger{width:40px;height:40px;}
   .burger span{left:6px;right:8px;}
   .burger span:nth-child(1){top:11px;}
   .burger span:nth-child(2){top:20px;}
   .burger span:nth-child(3){top:29px;}
+  .logo-img{height:30px;}
   .logo{font-size:16px;gap:7px;padding:0;}
   .logo .mark{width:34px;height:34px;font-size:13px;border-radius:7px;}
-  .mobile-cta{padding:8px 12px;font-size:11px;}
+  .mobile-cta{padding:8px 10px;font-size:10.5px;}
   .hero-tag{font-size:11.5px;padding:7px 14px;}
   .hero p.lead{font-size:15.5px;}
   .cards-grid{grid-template-columns:1fr;}
