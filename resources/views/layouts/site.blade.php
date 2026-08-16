@@ -1,6 +1,6 @@
 @php
-    $metaTitle = trim($__env->yieldContent('title')) ?: 'HM Builders & Suppliers (PVT) LTD';
-    $metaDescription = trim($__env->yieldContent('meta_description')) ?: 'HM Builders & Suppliers (Pvt) Ltd builds homes, commercial buildings, plans and construction material supply solutions across Sri Lanka.';
+    $metaTitle = html_entity_decode(trim($__env->yieldContent('title')), ENT_QUOTES, 'UTF-8') ?: 'HM Builders & Suppliers (PVT) LTD';
+    $metaDescription = html_entity_decode(trim($__env->yieldContent('meta_description')), ENT_QUOTES, 'UTF-8') ?: 'HM Builders & Suppliers (Pvt) Ltd builds homes, commercial buildings, plans and construction material supply solutions across Sri Lanka.';
     $metaImage = trim($__env->yieldContent('meta_image')) ?: asset('images/fav.png');
     $quoteServices = \App\Models\service::select('title')->orderBy('id')->get();
     $isProjects = request()->routeIs('projects') || request()->routeIs('project.images');

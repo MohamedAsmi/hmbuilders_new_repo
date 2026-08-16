@@ -22,7 +22,7 @@
     <div class="container welcome">
         <div class="welcome-media" data-reveal="left">
             <div class="frame"></div>
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80" alt="HM Builders team on site">
+            <img src="{{ asset('assets/img/who_we_are.jpeg') }}" alt="HM Builders team on site">
             <div class="badge"><b>2007</b><span>Founded</span></div>
         </div>
         <div data-reveal="right">

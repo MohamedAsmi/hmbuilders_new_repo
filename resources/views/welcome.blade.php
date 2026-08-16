@@ -86,7 +86,7 @@
     <div class="container welcome">
         <div class="welcome-media" data-reveal="left">
             <div class="frame"></div>
-            <img src="https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&w=800&q=80" alt="HM Builders construction team at work">
+            <img src="{{ asset('assets/img/welcome.png') }}" alt="HM Builders construction team at work">
             <div class="badge"><b>{{ $yearsValue }}{{ $yearsSuffix }}</b><span>Years of Trust</span></div>
         </div>
         <div data-reveal="right">
@@ -170,7 +170,7 @@
             <a href="{{ route('projects') }}" class="btn btn-dark" style="margin-top:26px;">View Our Projects</a>
         </div>
         <div class="welcome-media" data-reveal="right">
-            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" alt="Building plan drawing and construction blueprint">
+            <img src="{{ asset('assets/img/Our_Mission.png') }}" alt="Building plan drawing and construction blueprint">
         </div>
     </div>
 </section>
