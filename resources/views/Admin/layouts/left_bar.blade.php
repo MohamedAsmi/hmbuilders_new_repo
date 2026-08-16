@@ -31,6 +31,12 @@
                 </a>
             </li>
             <li class="side-nav-item">
+                <a href="{{route('home')}}#website-statistics" class="side-nav-link">
+                    <i class="uil-chart-growth"></i>
+                    <span> Website Statistics </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
                 <a href="{{route('AddOurTeam')}}" class="side-nav-link">
                     <i class="uil-dashboard"></i>
                     <span> Add Members </span>

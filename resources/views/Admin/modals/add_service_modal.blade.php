@@ -72,6 +72,16 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="row mb-3">
+                                    <label class="col-3 col-form-label">Detail Points</label>
+                                    <div class="col-9">
+                                        <textarea class="form-control @error('features') is-invalid @enderror" name="features" rows="4" placeholder="Enter one point per line">{{ old('features', $service->features ?? '') }}</textarea>
+                                        <small class="text-muted">These points show in the lower service detail section. Add one point per line.</small>
+                                        @error('features')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

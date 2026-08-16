@@ -103,6 +103,50 @@
     </div>
 </div>
 
+<div class="row mt-3">
+    <div class="col-12">
+        @if(session('status'))
+            <div class="alert alert-success">{{ session('status') }}</div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger">
+                Please check the website statistics fields and try again.
+            </div>
+        @endif
+
+        <div class="card" id="website-statistics">
+            <div class="card-header">
+                <h4 class="header-title mb-0">Website Statistics</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('site-stats.update') }}">
+                    @csrf
+                    <div class="row">
+                        @foreach($siteStats as $stat)
+                            <div class="col-xl-3 col-md-6">
+                                <div class="border rounded p-3 mb-3">
+                                    <label class="form-label">Label</label>
+                                    <input type="text" name="stats[{{ $stat->key }}][label]" class="form-control @error('stats.' . $stat->key . '.label') is-invalid @enderror" value="{{ old('stats.' . $stat->key . '.label', $stat->label) }}" required>
+
+                                    <label class="form-label mt-3">Number</label>
+                                    <input type="number" name="stats[{{ $stat->key }}][value]" class="form-control @error('stats.' . $stat->key . '.value') is-invalid @enderror" value="{{ old('stats.' . $stat->key . '.value', $stat->value) }}" min="0" required>
+
+                                    <label class="form-label mt-3">Suffix</label>
+                                    <input type="text" name="stats[{{ $stat->key }}][suffix]" class="form-control @error('stats.' . $stat->key . '.suffix') is-invalid @enderror" value="{{ old('stats.' . $stat->key . '.suffix', $stat->suffix) }}" maxlength="8" placeholder="+">
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Save Website Statistics</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 @push('js')

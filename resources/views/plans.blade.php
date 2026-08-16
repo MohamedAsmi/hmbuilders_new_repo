@@ -9,7 +9,7 @@
     $types = collect($projectarrs)->pluck('type')->filter()->unique()->values();
 @endphp
 
-<section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80')">
+<section class="page-banner" style="background-image:url('{{ asset('assets/img/luxury%20House.png') }}')">
     <div class="container">
         <div class="crumb" data-reveal="fade">
             <a href="{{ route('main') }}">Home</a><span class="sep">/</span><span class="cur">Plans</span>

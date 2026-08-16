@@ -132,6 +132,7 @@ class ServiceController extends BaseController
             'icon' => $icon,
             'title' => $request->title,
             'description' => $request->description,
+            'features' => trim((string) $request->features),
         ]);
 
         
@@ -182,11 +183,13 @@ class ServiceController extends BaseController
             'icon_image' => [empty($service->icon) ? 'required_without:icon' : 'nullable', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp'],
             'title' => ['required'],
             'description' => ['required'],
+            'features' => ['nullable', 'string'],
         ]);
 
         $data = [
             'title' => $request->title,
             'description' => $request->description,
+            'features' => trim((string) $request->features),
         ];
 
         $icon = trim((string) $request->icon);

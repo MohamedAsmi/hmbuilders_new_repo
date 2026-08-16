@@ -4,7 +4,7 @@
 @section('meta_description', 'Get in touch with HM Builders & Suppliers (Pvt) Ltd at HM Complex, #48 KK Street, Puttalam, Sri Lanka.')
 
 @section('content')
-<section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1600&q=80')">
+<section class="page-banner" style="background-image:url('{{ asset('assets/img/Material%20supply.png') }}')">
     <div class="container">
         <div class="crumb" data-reveal="fade">
             <a href="{{ route('main') }}">Home</a><span class="sep">/</span><span class="cur">Contact</span>

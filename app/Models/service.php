@@ -15,6 +15,7 @@ class service extends BaseModel
         'icon',
         'title',
         'description',
+        'features',
     ];
 
 }

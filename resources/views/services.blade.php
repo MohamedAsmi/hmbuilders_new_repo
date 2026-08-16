@@ -19,6 +19,20 @@
         'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
     ];
     $fallbackServiceIcon = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>';
+    $checkIcon = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>';
+    $defaultServiceFeatures = [
+        'Professional planning and execution',
+        'Quality materials and skilled technicians',
+        'Flexible support from estimate to completion',
+    ];
+    $parseServiceFeatures = function ($features) use ($defaultServiceFeatures) {
+        $features = trim((string) $features);
+        $lines = $features !== '' ? preg_split('/\r\n|\r|\n/', $features) : $defaultServiceFeatures;
+
+        return collect($lines)->map(function ($line) {
+            return trim((string) $line);
+        })->filter()->values();
+    };
     $serviceIconImagePattern = '/\.(svg|png|jpe?g|gif|webp)$/i';
     $isServiceIconImage = function ($icon) use ($serviceIconImagePattern) {
         $icon = trim((string) $icon);
@@ -43,7 +57,7 @@
     };
 @endphp
 
-<section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1581091870621-1e9b6b4a1a3f?auto=format&fit=crop&w=1600&q=80')">
+<section class="page-banner" style="background-image:url('{{ asset('assets/img/construction%20welding.png') }}')">
     <div class="container">
         <div class="crumb" data-reveal="fade">
             <a href="{{ route('main') }}">Home</a><span class="sep">/</span><span class="cur">Services</span>
@@ -111,6 +125,7 @@
                 $serviceIcon = trim((string) $service->icon);
                 $serviceIconIsImage = $isServiceIconImage($serviceIcon);
                 $serviceIconIsClass = $isServiceIconClass($serviceIcon);
+                $serviceFeatures = $parseServiceFeatures($service->features ?? '');
             @endphp
             <div class="svc-detail {{ $loop->even ? 'reverse' : '' }}" id="svc-{{ $service->id }}">
                 <div data-reveal="{{ $loop->even ? 'right' : 'left' }}">
@@ -132,11 +147,13 @@
                         </div>
                     </div>
                     <p>{!! nl2br(e($service->description)) !!}</p>
-                    <ul class="svc-list">
-                        <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Professional planning and execution</li>
-                        <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Quality materials and skilled technicians</li>
-                        <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Flexible support from estimate to completion</li>
-                    </ul>
+                    @if($serviceFeatures->isNotEmpty())
+                        <ul class="svc-list">
+                            @foreach($serviceFeatures as $feature)
+                                <li><span class="ic">{!! $checkIcon !!}</span>{{ $feature }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
                 <img data-reveal="{{ $loop->even ? 'left' : 'right' }}" src="{{ $image }}" alt="{{ $service->title }}" loading="lazy">
             </div>
@@ -152,9 +169,9 @@
                     </div>
                     <p>From single-family homes to large commercial and industrial buildings, our teams manage every stage of construction with certified materials and experienced technicians.</p>
                     <ul class="svc-list">
-                        <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Houses</li>
-                        <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Commercial Buildings</li>
-                        <li><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Industrial Buildings</li>
+                        <li><span class="ic">{!! $checkIcon !!}</span>Houses</li>
+                        <li><span class="ic">{!! $checkIcon !!}</span>Commercial Buildings</li>
+                        <li><span class="ic">{!! $checkIcon !!}</span>Industrial Buildings</li>
                     </ul>
                 </div>
                 <img data-reveal="right" src="{{ $fallbackImages[0] }}" alt="Building construction site">

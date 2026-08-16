@@ -29,6 +29,7 @@ class StoreserviceRequest extends FormRequest
             'icon_image'=>['nullable', 'required_without:icon', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp'],
             'title'=>['required'],
             'description'=>['required'],
+            'features'=>['nullable', 'string'],
         ];
     }
 }

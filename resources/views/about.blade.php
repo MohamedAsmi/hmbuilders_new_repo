@@ -4,7 +4,11 @@
 @section('meta_description', 'Learn about HM Builders & Material Supplies (Pvt) Ltd, founded in 2007, CIDA registered, and led by a construction team based in Puttalam, Sri Lanka.')
 
 @section('content')
-<section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&w=1600&q=80')">
+@php
+    $siteStats = $siteStats ?? \App\Models\SiteStat::frontendStats();
+@endphp
+
+<section class="page-banner" style="background-image:url('{{ asset('assets/img/building.png') }}')">
     <div class="container">
         <div class="crumb" data-reveal="fade">
             <a href="{{ route('main') }}">Home</a><span class="sep">/</span><span class="cur">About Us</span>
@@ -55,14 +59,7 @@
     </div>
 </section>
 
-<section class="stats">
-    <div class="container">
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="450">0</span>+</b><p>Projects Completed</p></div>
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="900">0</span>+</b><p>Happy Customers</p></div>
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="17">0</span></b><p>Years Of Experience</p></div>
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="120">0</span>+</b><p>Skilled Workers</p></div>
-    </div>
-</section>
+@include('partials.site-stats', ['stats' => $siteStats])
 
 <section class="section bg-stone" id="team">
     <div class="container">

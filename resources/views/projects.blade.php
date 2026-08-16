@@ -31,7 +31,7 @@
         ->values();
 @endphp
 
-<section class="page-banner" style="background-image:url('https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1600&q=80')">
+<section class="page-banner" style="background-image:url('{{ asset('assets/img/Drowing.png') }}')">
     <div class="container">
         <div class="crumb" data-reveal="fade">
             <a href="{{ route('main') }}">Home</a><span class="sep">/</span><span class="cur">Projects</span>

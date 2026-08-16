@@ -14,18 +14,22 @@ use App\Models\team;
 use App\Models\service;
 use App\Models\project;
 use App\Models\project_image;
+use App\Models\SiteStat;
 class UserController extends BaseController
 {
     public function index()
     {
-        $projects =project::count();
+        $siteStats = SiteStat::frontendStats();
+        $services = service::orderBy('id')->get();
       
-        return view('welcome')->with(['projects'=> $projects]);
+        return view('welcome')->with(['siteStats'=> $siteStats,'services'=> $services]);
     }
     public function about()
     {
         $teams =team::all();
-        return view('about')->with(['teams'=> $teams]);
+        $siteStats = SiteStat::frontendStats();
+
+        return view('about')->with(['teams'=> $teams,'siteStats'=> $siteStats]);
 
     }
     public function service()

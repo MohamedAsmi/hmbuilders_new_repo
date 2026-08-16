@@ -3,9 +3,42 @@
 @section('title', 'Home - HM Builders & Suppliers (PVT) LTD')
 @section('meta_description', 'HM Builders & Suppliers (Pvt) Ltd is an experienced construction company in Puttalam, Sri Lanka, delivering quality construction, material supply and building plans since 2007.')
 
+@push('styles')
+    <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/flaticon.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+@endpush
+
 @section('content')
 @php
-    $projectCount = $projects ?? 450;
+    $siteStats = $siteStats ?? \App\Models\SiteStat::frontendStats();
+    $services = collect($services ?? []);
+    $yearsStat = $siteStats->firstWhere('key', 'years_experience');
+    $yearsValue = $yearsStat ? (int) data_get($yearsStat, 'value', 17) : 17;
+    $yearsSuffix = $yearsStat ? data_get($yearsStat, 'suffix', '') : '';
+    $fallbackServiceIcon = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>';
+    $serviceIconImagePattern = '/\.(svg|png|jpe?g|gif|webp)$/i';
+    $isServiceIconImage = function ($icon) use ($serviceIconImagePattern) {
+        $icon = trim((string) $icon);
+        $path = parse_url($icon, PHP_URL_PATH) ?: $icon;
+
+        return $icon !== '' && preg_match($serviceIconImagePattern, $path);
+    };
+    $isServiceIconClass = function ($icon) {
+        return preg_match('/^(flaticon-|fa[srbld]?\s|fa-|mdi\s|mdi-|uil\s|uil-|dripicons-|ti-|bx\s|bx-|la\s|la-|icon-)/i', trim((string) $icon));
+    };
+    $serviceIconUrl = function ($icon) {
+        $icon = trim((string) $icon);
+
+        if (\Illuminate\Support\Str::startsWith($icon, ['http://', 'https://', '/'])) {
+            return $icon;
+        }
+
+        return asset('image/' . str_replace(':', '_', $icon));
+    };
+    $serviceIconText = function ($icon) {
+        return \Illuminate\Support\Str::upper(\Illuminate\Support\Str::limit(trim((string) $icon), 3, ''));
+    };
 @endphp
 
 <section class="hero" id="home">
@@ -54,7 +87,7 @@
         <div class="welcome-media" data-reveal="left">
             <div class="frame"></div>
             <img src="https://images.unsplash.com/photo-1541976590-713941681591?auto=format&fit=crop&w=800&q=80" alt="HM Builders construction team at work">
-            <div class="badge"><b>17+</b><span>Years of Trust</span></div>
+            <div class="badge"><b>{{ $yearsValue }}{{ $yearsSuffix }}</b><span>Years of Trust</span></div>
         </div>
         <div data-reveal="right">
             <div class="eyebrow">Welcome to HM Builders</div>
@@ -72,14 +105,7 @@
     </div>
 </section>
 
-<section class="stats">
-    <div class="container">
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="{{ $projectCount }}">0</span>+</b><p>Projects Completed</p></div>
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="900">0</span>+</b><p>Happy Customers</p></div>
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="17">0</span></b><p>Years Of Experience</p></div>
-        <div class="stat" data-reveal="fade"><b><span class="count" data-target="120">0</span>+</b><p>Skilled Workers</p></div>
-    </div>
-</section>
+@include('partials.site-stats', ['stats' => $siteStats])
 
 <section class="section bg-stone" id="services">
     <div class="container">
@@ -91,41 +117,38 @@
         <div class="services-carousel" data-services-carousel>
             <div class="services-scroll">
                 <div class="services-grid stagger" data-reveal="scale">
-                    <div class="svc-card">
-                        <div class="num">01</div>
-                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></div>
-                        <h3>Building Construction</h3>
-                        <p>Houses, commercial buildings, apartments, industrial and modular building construction handled end to end.</p>
-                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-                    </div>
-                    <div class="svc-card">
-                        <div class="num">02</div>
-                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 22h20L12 2z"/><path d="M9 22V14h6v8"/></svg></div>
-                        <h3>Building Plan Drawing</h3>
-                        <p>Architecture, structural, mechanical and electrical, and landscape drawings prepared by qualified draughtsmen.</p>
-                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-                    </div>
-                    <div class="svc-card">
-                        <div class="num">03</div>
-                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 21V9"/></svg></div>
-                        <h3>Construction Material Supply</h3>
-                        <p>Leading supplier of washed sand, aggregates, base varieties, sweet sand, boulders and natural rocks.</p>
-                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-                    </div>
-                    <div class="svc-card">
-                        <div class="num">04</div>
-                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
-                        <h3>Consultation</h3>
-                        <p>Expert guidance at every stage of your project, from planning and budgeting through to completion.</p>
-                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-                    </div>
-                    <div class="svc-card">
-                        <div class="num">05</div>
-                        <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg></div>
-                        <h3>Interior Designing</h3>
-                        <p>The art and science of enhancing your interior spaces for a healthier, more comfortable environment.</p>
-                        <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
-                    </div>
+                    @forelse($services as $service)
+                        @php
+                            $serviceIcon = trim((string) $service->icon);
+                            $serviceIconIsImage = $isServiceIconImage($serviceIcon);
+                            $serviceIconIsClass = $isServiceIconClass($serviceIcon);
+                        @endphp
+                        <div class="svc-card">
+                            <div class="num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
+                            <div class="ic">
+                                @if($serviceIcon === '')
+                                    {!! $fallbackServiceIcon !!}
+                                @elseif($serviceIconIsImage)
+                                    <img src="{{ $serviceIconUrl($serviceIcon) }}" alt="{{ $service->title }} icon" loading="lazy">
+                                @elseif($serviceIconIsClass)
+                                    <i class="{{ $serviceIcon }}" aria-hidden="true"></i>
+                                @else
+                                    <span class="svc-icon-text">{{ $serviceIconText($serviceIcon) }}</span>
+                                @endif
+                            </div>
+                            <h3>{{ $service->title }}</h3>
+                            <p>{{ \Illuminate\Support\Str::limit(strip_tags($service->description), 135) }}</p>
+                            <a href="{{ route('services') }}#svc-{{ $service->id }}" class="more">Read More &rarr;</a>
+                        </div>
+                    @empty
+                        <div class="svc-card">
+                            <div class="num">01</div>
+                            <div class="ic">{!! $fallbackServiceIcon !!}</div>
+                            <h3>Building Construction</h3>
+                            <p>Houses, commercial buildings, apartments, industrial and modular building construction handled end to end.</p>
+                            <a href="{{ route('services') }}" class="more">Read More &rarr;</a>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>

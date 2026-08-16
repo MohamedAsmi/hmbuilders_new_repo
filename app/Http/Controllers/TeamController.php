@@ -14,6 +14,7 @@ use App\Models\team;
 use App\Models\service;
 use App\Models\contact;
 use App\Models\inquire;
+use App\Models\SiteStat;
 
 class TeamController extends BaseController
 {
@@ -41,7 +42,40 @@ class TeamController extends BaseController
         // $servicestatus =service::where('status',0)->get();
         $contactstatus =contact::where('status',0)->get();
         $inquirestatus =inquire::where('status',0)->get();
-        return View('Admin.index')->with(['team'=>count($team),'service'=>count($service),'contact'=>count($contact),'inquire'=>count($inquire),'contactstatus'=>count($contactstatus),'inquirestatus'=>count($inquirestatus)]);
+        $siteStats = SiteStat::frontendStats();
+
+        return View('Admin.index')->with(['team'=>count($team),'service'=>count($service),'contact'=>count($contact),'inquire'=>count($inquire),'contactstatus'=>count($contactstatus),'inquirestatus'=>count($inquirestatus),'siteStats'=>$siteStats]);
+    }
+
+    public function updateSiteStats(Request $request)
+    {
+        $validated = $request->validate([
+            'stats' => ['required', 'array'],
+            'stats.*.label' => ['required', 'string', 'max:100'],
+            'stats.*.value' => ['required', 'integer', 'min:0', 'max:9999999'],
+            'stats.*.suffix' => ['nullable', 'string', 'max:8'],
+        ]);
+
+        foreach (SiteStat::defaultRows() as $default) {
+            $key = $default['key'];
+            $stat = $validated['stats'][$key] ?? null;
+
+            if (!$stat) {
+                continue;
+            }
+
+            SiteStat::updateOrCreate(
+                ['key' => $key],
+                [
+                    'label' => $stat['label'],
+                    'value' => $stat['value'],
+                    'suffix' => $stat['suffix'] ?? '',
+                    'sort_order' => $default['sort_order'],
+                ]
+            );
+        }
+
+        return redirect()->route('home')->with('status', 'Website statistics updated successfully.');
     }
 
     public function AddTeam()

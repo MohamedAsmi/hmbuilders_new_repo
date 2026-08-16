@@ -32,6 +32,7 @@ Route::post('/contacts/message', [App\Http\Controllers\UserController::class, 's
 Route::post('/inquires/message', [App\Http\Controllers\UserController::class, 'saveinquiresmessage'])->name('save.inquires.message');
 
 Route::get('/home', [App\Http\Controllers\TeamController::class, 'index'])->name('home');
+Route::post('/Admin/site-stats/update', [App\Http\Controllers\TeamController::class, 'updateSiteStats'])->name('site-stats.update');
 
 
 Route::get('/plans', [App\Http\Controllers\UserController::class, 'plans'])->name('modern-projects');
